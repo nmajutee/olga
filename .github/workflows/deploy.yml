@@ -23,7 +23,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx opennextjs-cloudflare
+      - run: npx opennextjs-cloudflare build
         env:
           WORDPRESS_GRAPHQL_ENDPOINT: ${{ secrets.WORDPRESS_GRAPHQL_ENDPOINT }}
           WORDPRESS_HOST_HEADER: ${{ secrets.WORDPRESS_HOST_HEADER }}

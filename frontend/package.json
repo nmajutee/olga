@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cloudflare": "npx opennextjs-cloudflare",
-    "preview": "npx opennextjs-cloudflare && npx wrangler pages dev",
-    "deploy": "npx opennextjs-cloudflare && npx wrangler pages deploy .open-next",
+    "build:cloudflare": "npx opennextjs-cloudflare build",
+    "preview": "npx opennextjs-cloudflare build && npx wrangler pages dev",
+    "deploy": "npx opennextjs-cloudflare build && npx wrangler pages deploy .open-next",
     "start": "next start",
     "lint": "eslint ."
   },
