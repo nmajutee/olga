@@ -1,6 +1,3 @@
-import http from "node:http";
-import https from "node:https";
-
 type GraphQLTransportOptions = {
   endpoint: string;
   hostHeader?: string;
@@ -12,47 +9,29 @@ export type GraphQLTransportResponse = {
   body: string;
 };
 
-export function postToWordPress({
+export async function postToWordPress({
   endpoint,
   hostHeader,
   body
 }: GraphQLTransportOptions): Promise<GraphQLTransportResponse> {
-  const url = new URL(endpoint);
-  const isHttps = url.protocol === "https:";
-  const requestImpl = isHttps ? https.request : http.request;
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
 
-  return new Promise((resolve, reject) => {
-    const request = requestImpl(
-      {
-        protocol: url.protocol,
-        hostname: url.hostname,
-        port: url.port ? Number(url.port) : isHttps ? 443 : 80,
-        path: `${url.pathname}${url.search}`,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Content-Length": Buffer.byteLength(body),
-          ...(hostHeader ? { Host: hostHeader } : {})
-        }
-      },
-      (response) => {
-        let responseBody = "";
+  if (hostHeader) {
+    headers["Host"] = hostHeader;
+  }
 
-        response.on("data", (chunk) => {
-          responseBody += chunk;
-        });
-
-        response.on("end", () => {
-          resolve({
-            status: response.statusCode ?? 500,
-            body: responseBody
-          });
-        });
-      }
-    );
-
-    request.on("error", reject);
-    request.write(body);
-    request.end();
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers,
+    body,
   });
+
+  const responseBody = await response.text();
+
+  return {
+    status: response.status,
+    body: responseBody,
+  };
 }

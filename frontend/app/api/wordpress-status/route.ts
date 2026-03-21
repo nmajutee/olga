@@ -4,8 +4,6 @@ import { postToWordPress } from "@/lib/wordpress-request";
 const endpoint = process.env.WORDPRESS_GRAPHQL_ENDPOINT;
 const wordpressHostHeader = process.env.WORDPRESS_HOST_HEADER;
 
-export const runtime = "nodejs";
-
 export async function GET() {
   if (!endpoint) {
     return NextResponse.json(
