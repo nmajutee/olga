@@ -23,7 +23,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx cloudflare
+      - run: npx opennextjs-cloudflare
         env:
           WORDPRESS_GRAPHQL_ENDPOINT: ${{ secrets.WORDPRESS_GRAPHQL_ENDPOINT }}
           WORDPRESS_HOST_HEADER: ${{ secrets.WORDPRESS_HOST_HEADER }}
@@ -33,4 +33,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: frontend
-          command: deploy
+          command: pages deploy .open-next --project-name=olga
