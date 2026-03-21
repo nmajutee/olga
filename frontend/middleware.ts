@@ -3,7 +3,7 @@ import { i18n } from "./i18n/config";
 
 export const runtime = "edge";
 
-export default function proxy(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip internal files and special routes
