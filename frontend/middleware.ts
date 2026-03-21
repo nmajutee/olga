@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { i18n } from "./i18n/config";
 
-export const runtime = "edge";
+export const runtime = "experimental-edge";
 
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
