@@ -1,102 +1,118 @@
 import Link from "next/link";
 import { PostCard } from "@/components/post-card";
+import { PortfolioGrid } from "@/components/portfolio-grid";
+import { StatsCounter } from "@/components/stats-counter";
 import { formatPublishDate, getPosts } from "@/lib/wordpress";
 import {
-  MegaphoneIcon,
   ChatBubbleLeftRightIcon,
+  NewspaperIcon,
   PencilSquareIcon,
-  ShieldCheckIcon,
-  GlobeAltIcon,
-  SparklesIcon,
+  DocumentMagnifyingGlassIcon,
+  AcademicCapIcon,
+  MegaphoneIcon,
 } from "@heroicons/react/24/outline";
 
 const expertise = [
   {
-    icon: MegaphoneIcon,
+    icon: ChatBubbleLeftRightIcon,
     iconClass: "expertise-icon-rose",
     title: "Strategic Communications",
-    desc: "Developing data-driven communication frameworks and multi-channel campaign strategies aligned with organizational objectives.",
+    desc: "I develop and implement comprehensive communication strategies to enhance brand visibility and deliver impactful messages across platforms.",
   },
   {
-    icon: ChatBubbleLeftRightIcon,
+    icon: NewspaperIcon,
     iconClass: "expertise-icon-sage",
-    title: "Media Relations",
-    desc: "Building and nurturing relationships with journalists, managing press conferences, and securing strategic media placements.",
+    title: "Media Relations & Press",
+    desc: "I cultivate relationships with journalists and media houses, draft press releases, organize press conferences, and manage crisis communications.",
   },
   {
     icon: PencilSquareIcon,
     iconClass: "expertise-icon-rose",
-    title: "Content Strategy",
-    desc: "Planning and writing clear content across channels, from press materials to social campaigns.",
+    title: "Content Creation",
+    desc: "I author high-impact content pieces including newsletters, reports, articles, and social media posts that boost stakeholder engagement.",
   },
   {
-    icon: ShieldCheckIcon,
+    icon: DocumentMagnifyingGlassIcon,
     iconClass: "expertise-icon-charcoal",
-    title: "Crisis Communications",
-    desc: "Proactive crisis management with rapid response protocols, stakeholder communications, and reputation recovery strategies.",
+    title: "Research & Documentation",
+    desc: "I conduct qualitative and quantitative research, literature reviews, and present findings at national and international conferences.",
   },
   {
-    icon: GlobeAltIcon,
+    icon: AcademicCapIcon,
     iconClass: "expertise-icon-sage",
-    title: "Advocacy & Campaigns",
-    desc: "Designing advocacy campaigns targeting policymakers, community leaders, and youth populations for social impact.",
+    title: "Training & Capacity Building",
+    desc: "I design and deliver training sessions on communication ethics, media literacy, and effective advocacy techniques for staff and communities.",
   },
   {
-    icon: SparklesIcon,
+    icon: MegaphoneIcon,
     iconClass: "expertise-icon-rose",
-    title: "Brand Strategy",
-    desc: "Shaping brand identity and positioning through strategic messaging, visual storytelling, and audience engagement.",
+    title: "Advocacy & Campaigns",
+    desc: "I spearhead multi-channel campaigns targeting diverse audiences, forging partnerships with NGOs, government bodies, and civil society organizations.",
   },
 ];
 
-const metrics = [
-  { value: "6+", label: "Years Experience" },
-  { value: "30+", label: "Campaigns Delivered" },
-  { value: "35%", label: "Avg. Engagement Increase" },
-  { value: "4", label: "Organizations Served" },
+const stats = [
+  { value: "6", suffix: "+", label: "Years of Experience" },
+  { value: "30", suffix: "+", label: "Campaigns Led" },
+  { value: "100", suffix: "+", label: "Content Pieces Published" },
+  { value: "800", suffix: "+", label: "People Reached" },
 ];
 
-const caseStudies = [
+const portfolioItems = [
   {
-    slug: "reach-out-cameroon",
-    tags: ["Campaigns", "Content Strategy"],
-    tagClass: "tag-rose",
-    title: "Reach Out Cameroon",
-    desc: "I led more than 30 multi-channel campaigns and helped raise engagement by 35% across key audiences.",
-    visual: "ROC",
+    id: "advocacy-training",
+    title: "Advocacy & Training",
+    category: "Workshop",
+    image: "/images/portfolio/advocacy-training.jpg",
+    activity: "Facilitated multi-day advocacy training workshops focused on equipping community leaders with the skills to champion human rights and influence local policy.",
+    role: "Lead Facilitator & Trainer",
+    impact: "Participants developed actionable advocacy plans that were later presented to local government bodies, resulting in increased dialogue between communities and policymakers.",
   },
   {
-    slug: "paradigm-initiative",
-    tags: ["Research", "Advocacy"],
-    tagClass: "tag-sage",
-    title: "Paradigm Initiative",
-    desc: "I supported research, presented findings internationally, and helped strengthen visibility for digital rights work across Africa.",
-    visual: "PI",
+    id: "digital-rights-panel",
+    title: "Digital Rights Panel",
+    category: "Panel Discussion",
+    image: "/images/portfolio/digital-rights-panel.jpg",
+    activity: "Served as a panelist at a regional forum on digital rights, discussing internet freedom, data privacy, and the digital divide across African nations.",
+    role: "Panelist & Speaker",
+    impact: "The discussion generated cross-sector commitments to support digital inclusion policies and raised awareness among 200+ attendees about threats to online freedoms.",
   },
   {
-    slug: "rock-me-fabulous",
-    tags: ["Social Media", "Brand"],
-    tagClass: "tag-rose",
-    title: "Rock Me Fabulous",
-    desc: "Managed social platforms achieving 60% follower growth, boosted brand visibility through innovative campaigns and proactive crisis management.",
-    visual: "RMF",
+    id: "community-gbv-training",
+    title: "Community Training on GBV",
+    category: "Community Training",
+    image: "/images/portfolio/community-gbv-training.jpg",
+    activity: "Organized and led community training sessions with men and boys focused on understanding, preventing, and responding to gender-based violence.",
+    role: "Organizer & Trainer",
+    impact: "Over 150 men participated across multiple sessions, leading to the formation of local male advocacy groups that continue to champion gender equity in their communities.",
   },
   {
-    slug: "psyeduc-global",
-    tags: ["Nonprofit", "PR"],
-    tagClass: "tag-sage",
-    title: "PsyEduc Global Cameroon",
-    desc: "Developed a comprehensive communication strategy increasing public engagement by 45%, managed social media and organized press conferences.",
-    visual: "PG",
+    id: "youth-workshop",
+    title: "Youth Empowerment Workshop",
+    category: "Workshop",
+    image: "/images/portfolio/youth-workshop.jpg",
+    activity: "Designed and facilitated youth empowerment workshops centered on civic engagement, digital literacy, and leadership development for young people.",
+    role: "Workshop Designer & Facilitator",
+    impact: "Over 100 young people gained practical skills in advocacy, digital tools, and community organizing that they continue to apply in their local contexts.",
   },
-];
-
-const partners = [
-  "Reach Out Cameroon",
-  "Paradigm Initiative",
-  "MTN Cameroon",
-  "PsyEduc Global",
-  "Rock Me Fabulous",
+  {
+    id: "humanitarian-response",
+    title: "Humanitarian Response Coordination",
+    category: "Program Facilitation",
+    image: "/images/portfolio/humanitarian-response.jpg",
+    activity: "Coordinated community-level humanitarian response programs, ensuring that affected populations were reached with timely information, resources, and support.",
+    role: "Program Coordinator & Facilitator",
+    impact: "Streamlined communication between field teams and communities, improving response times and ensuring more equitable distribution of resources to vulnerable populations.",
+  },
+  {
+    id: "media-literacy",
+    title: "Media Literacy Campaign",
+    category: "Campaign",
+    image: "/images/portfolio/media-literacy.jpg",
+    activity: "Led a media literacy campaign to help community members identify misinformation, understand their digital rights, and engage responsibly with online platforms.",
+    role: "Campaign Lead & Trainer",
+    impact: "The campaign reached over 500 community members through workshops and social media outreach, contributing to more informed and critical engagement with digital media.",
+  },
 ];
 
 const testimonials = [
@@ -104,17 +120,19 @@ const testimonials = [
     quote:
       "Working together felt seamless from start to finish. Our goals were understood quickly, the right questions were asked, and the final campaign exceeded expectations.",
     name: "Team Lead",
-    role: "Reach Out Cameroon",
+    role: "International Development Organization",
     avatar: "T",
   },
   {
     quote:
       "Our advocacy vision finally sounded clear and human. The messaging balanced strategy with empathy and gave us something we were proud to share.",
     name: "Program Director",
-    role: "PsyEduc Global Cameroon",
+    role: "Mental Health Advocacy Organization",
     avatar: "P",
   },
 ];
+
+
 
 export default async function HomePage() {
   const posts = await getPosts(3);
@@ -128,86 +146,84 @@ export default async function HomePage() {
             <div>
               <div className="hero-status">
                 <span className="hero-status-dot" aria-hidden="true" />
-                Available for new opportunities
+                Available for work
               </div>
 
               <h1 id="hero-heading" className="hero-title">
-                Strategic
-                <br />
-                <span className="hero-title-accent">Communications</span>
-                <br />
+                Humanitarian &amp;{" "}
+                <span className="hero-title-accent">Social Impact</span>{" "}
                 Professional
               </h1>
 
               <p className="hero-desc">
-                I build communication strategies and campaigns that help
-                organizations speak clearly, earn trust, and create real impact.
+                With 6+ years of experience in strategic communications, I develop
+                impactful campaigns, manage media relations, facilitate trainings,
+                and lead advocacy initiatives that create real change in communities
+                across Africa.
               </p>
 
               <div className="hero-actions">
                 <Link href="/contact" className="btn btn-primary btn-lg">
-                  Start a Project
+                  Get in Touch
                 </Link>
-                <Link href="/case-studies" className="btn btn-outline btn-lg">
-                  View Case Studies
+                <Link href="/portfolio" className="btn btn-outline btn-lg" style={{ borderColor: "rgba(255,255,255,0.4)", color: "white" }}>
+                  View My Work
                 </Link>
               </div>
             </div>
 
-            <div className="hero-visual">
-              <div className="hero-portrait">
-                <span className="hero-portrait-text" aria-hidden="true">OE</span>
-              </div>
-              <div className="hero-stat is-top">
-                <span className="hero-stat-label">Experience</span>
-                <span className="hero-stat-value">6+ Years</span>
-              </div>
-              <div className="hero-stat is-bottom">
-                <span className="hero-stat-label">Campaigns</span>
-                <span className="hero-stat-value">30+ Done</span>
-              </div>
+            <div className="hero-portrait">
+              <img
+                src="/images/hero.jpg"
+                alt="Olga Emma Elume"
+                className="hero-portrait-image"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══ PARTNER LOGOS ══ */}
-      <section aria-label="Organizations I have worked with">
+      {/* ══ MY STORY / MISSION / VISION ══ */}
+      <section className="section" style={{ background: "var(--color-cream-dark)" }} aria-labelledby="mission-heading">
         <div className="container">
-          <div className="logo-cloud">
-            {partners.map((p) => (
-              <span key={p} className="logo-cloud-item">
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+          <h2 id="mission-heading" className="section-title">
+            My Story, Mission &amp; Vision
+          </h2>
 
-      {/* ══ METRICS ══ */}
-      <section aria-label="Key achievements">
-        <div className="container">
-          <div className="metrics-bar">
-            {metrics.map((m) => (
-              <div key={m.label} className="metric">
-                <div className="metric-value">{m.value}</div>
-                <div className="metric-label">{m.label}</div>
+          <div className="mission-grid">
+            <div className="mission-card">
+              <div className="mission-card-icon mission-icon-rose" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7l-.7.7"/><path d="M9 16a5 5 0 1110 0v1H9v-1z"/><path d="M9 17h6v4H9z"/></svg>
               </div>
-            ))}
+              <h3>My Story</h3>
+              <p>I have spent the last 6+ years building campaigns, managing media relationships, and creating content that people can actually connect with. I know how to adjust the message for different audiences and keep the work grounded in real people and real issues.</p>
+            </div>
+            <div className="mission-card">
+              <div className="mission-card-icon mission-icon-rose" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="11"/></svg>
+              </div>
+              <h3>My Mission</h3>
+              <p>My mission is to use communication, advocacy, and learning spaces to help people feel informed, included, and heard.</p>
+            </div>
+            <div className="mission-card">
+              <div className="mission-card-icon mission-icon-rose" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <h3>My Vision</h3>
+              <p>I want to be part of a world where digital rights are protected, gender equity is taken seriously, and humanitarian work is shaped by the people closest to the issue.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══ EXPERTISE ══ */}
+      {/* ══ EXPERTISE (Services) ══ */}
       <section className="section" aria-labelledby="expertise-heading">
         <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">Areas of Expertise</div>
           <h2 id="expertise-heading" className="section-title">
-            What I Bring to the Table
+            What I Do
           </h2>
           <p className="section-subtitle">
-            Six years of hands-on work across strategy, media, and advocacy have
-            taught me how to turn complex goals into clear communication.
+            My work brings together advocacy, training, community engagement, and strategic communications shaped by years of hands-on humanitarian experience.
           </p>
 
           <div className="expertise-grid" style={{ marginTop: "3rem" }}>
@@ -224,108 +240,61 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ══ FEATURED CASE STUDIES ══ */}
-      <section
-        className="section"
-        style={{ background: "var(--color-cream-dark)" }}
-        aria-labelledby="work-heading"
-      >
+      {/* ══ IMPACT STATISTICS ══ */}
+      <section className="section stats-section" aria-labelledby="stats-heading">
         <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">Selected Work</div>
-          <h2 id="work-heading" className="section-title">
-            Case Studies
+          <h2 id="stats-heading" className="section-title">
+            Measurable Change
           </h2>
           <p className="section-subtitle">
-            Real campaigns, real results. Here are some of the projects where I drove
-            measurable impact through strategic communications.
+            A snapshot of the work I&apos;ve contributed to across communities, organizations, and programs.
           </p>
 
-          <div className="case-study-grid" style={{ marginTop: "3rem" }}>
-            {caseStudies.map((cs) => (
-              <Link
-                key={cs.slug}
-                href={`/case-studies/${cs.slug}`}
-                className="case-study-card"
-                aria-label={`View case study: ${cs.title}`}
-              >
-                <div className="case-study-visual">
-                  <span className="case-study-visual-text" aria-hidden="true">
-                    {cs.visual}
-                  </span>
-                </div>
-                <div className="case-study-body">
-                  <div className="case-study-tags">
-                    {cs.tags.map((t) => (
-                      <span key={t} className={`tag ${cs.tagClass}`}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <h3>{cs.title}</h3>
-                  <p>{cs.desc}</p>
-                  <span className="case-study-link">
-                    Read Case Study <span aria-hidden="true">&rarr;</span>
-                  </span>
-                </div>
-              </Link>
-            ))}
+          <div style={{ marginTop: "3rem" }}>
+            <StatsCounter stats={stats} />
+          </div>
+        </div>
+      </section>
+
+      {/* ══ PORTFOLIO ══ */}
+      <section className="section" aria-labelledby="portfolio-heading">
+        <div className="container">
+          <h2 id="portfolio-heading" className="section-title">
+            Portfolio
+          </h2>
+          <p className="section-subtitle">
+            A visual journey through the activities, workshops, and community programs I&apos;ve been part of. Click any image to learn more.
+          </p>
+
+          <div style={{ marginTop: "3rem" }}>
+            <PortfolioGrid
+              items={portfolioItems}
+              labels={{
+                modalActivity: "Activity",
+                modalRole: "My Role",
+                modalImpact: "Impact & Outcomes",
+                closeModal: "Close",
+              }}
+            />
           </div>
 
           <div style={{ textAlign: "center", marginTop: "3rem" }}>
-            <Link href="/case-studies" className="btn btn-outline">
-              View All Case Studies
+            <Link href="/portfolio" className="btn btn-outline">
+              View Full Portfolio
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ══ PROCESS ══ */}
-      <section className="section" aria-labelledby="process-heading">
-        <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">My Process</div>
-          <h2 id="process-heading" className="section-title">
-            How I Work
-          </h2>
-          <p className="section-subtitle">
-            My process moves from research to strategy to execution so the work stays focused and useful at every stage.
-          </p>
-
-          <div className="process-grid">
-            <div className="process-step">
-              <div className="process-num">01</div>
-              <h3>Research &amp; Discovery</h3>
-              <p>
-                Understanding your audience, goals, and landscape through qualitative
-                and quantitative research and stakeholder mapping.
-              </p>
-            </div>
-            <div className="process-step">
-              <div className="process-num">02</div>
-              <h3>Strategy &amp; Planning</h3>
-              <p>
-                Developing data-driven communication frameworks, messaging
-                architecture, and multi-channel campaign plans tailored to your
-                objectives.
-              </p>
-            </div>
-            <div className="process-step">
-              <div className="process-num">03</div>
-              <h3>Execute &amp; Measure</h3>
-              <p>
-                Launching campaigns, managing media relations, producing content, and
-                measuring impact with care and consistency.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ══ TESTIMONIALS ══ */}
-      <section className="section" aria-labelledby="testimonials-heading">
+      <section
+        className="section"
+        style={{ background: "var(--color-cream-dark)" }}
+        aria-labelledby="testimonials-heading"
+      >
         <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">Testimonials</div>
           <h2 id="testimonials-heading" className="section-title">
-            What People Say
+            Kind Words
           </h2>
 
           <div className="testimonial-grid">
@@ -348,20 +317,15 @@ export default async function HomePage() {
       </section>
 
       {/* ══ BLOG PREVIEW ══ */}
-      <section
-        className="section blog-section"
-        style={{ background: "var(--color-cream-dark)" }}
-        aria-labelledby="blog-heading"
-      >
+      <section className="section blog-section" aria-labelledby="blog-heading">
         <div className="container">
           <div className="blog-section-header">
             <div>
-              <div className="section-eyebrow" aria-hidden="true">Latest Writing</div>
               <h2 id="blog-heading" className="section-title">
                 From the Blog
               </h2>
               <p className="section-subtitle">
-                Thoughts, insights and perspectives on communications, media and storytelling.
+                Reflections, research, and insights on humanitarian work, digital rights, gender issues, and community engagement.
               </p>
             </div>
             <Link href="/blog" className="btn btn-outline">
@@ -371,7 +335,6 @@ export default async function HomePage() {
 
           {posts.length > 0 ? (
             <>
-              {/* Featured Post */}
               <Link href={`/blog/${posts[0].slug}`} className="blog-featured">
                 <div className="blog-featured-visual">
                   <span className="blog-featured-visual-text" aria-hidden="true">✦</span>
@@ -400,7 +363,6 @@ export default async function HomePage() {
                 </div>
               </Link>
 
-              {/* Remaining Posts */}
               {posts.length > 1 && (
                 <div className="post-grid">
                   {posts.slice(1).map((post) => (
@@ -420,17 +382,16 @@ export default async function HomePage() {
       {/* ══ CTA ══ */}
       <div className="container">
         <section className="cta-section" aria-labelledby="cta-heading">
-          <div className="section-eyebrow" aria-hidden="true">Let&apos;s Connect</div>
           <h2 id="cta-heading" className="cta-title">
-            Ready to Elevate Your Communications?
+            Let&apos;s Create Impact Together
           </h2>
           <p className="cta-desc">
-            Whether you need a strategic communications partner, a campaign
-            specialist, or a full-time communications officer, I&apos;m here to help
-            you connect with the audiences who matter most.
+            Whether you need a facilitator, trainer, or strategic partner for
+            community programs, I&apos;d love to hear about your work and explore
+            how we can collaborate.
           </p>
           <Link href="/contact" className="btn btn-white btn-lg">
-            Start a Conversation
+            Get in Touch
           </Link>
         </section>
       </div>

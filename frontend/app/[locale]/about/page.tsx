@@ -28,9 +28,9 @@ export default async function AboutPage({ params }: PageProps) {
       "@type": "Person",
       "@id": "https://olgaemma.com/#person",
       name: "Olga Emma Elume",
-      jobTitle: "Strategic Communications Consultant",
+      jobTitle: "Communications Officer",
       description:
-        "Strategic Communications Consultant with 6+ years driving impactful campaigns, media relations, crisis communications, and advocacy across Africa.",
+        "I work in communications and advocacy, with 6+ years of experience building campaigns, managing media relations, and supporting community-focused work across Africa.",
       url: "https://olgaemma.com/about",
       address: {
         "@type": "PostalAddress",
@@ -64,7 +64,11 @@ export default async function AboutPage({ params }: PageProps) {
         <div className="container">
           <div className="about-intro">
             <div className="about-portrait">
-              <span className="about-portrait-text" aria-hidden="true">OE</span>
+              <img
+                src="/images/about-portrait.jpg"
+                alt="Olga Emma Elume"
+                className="about-portrait-image"
+              />
             </div>
 
             <div className="about-text">

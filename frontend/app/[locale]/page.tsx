@@ -1,31 +1,25 @@
 import Link from "next/link";
 import { PostCard } from "@/components/post-card";
+import { PortfolioGrid } from "@/components/portfolio-grid";
+import { StatsCounter } from "@/components/stats-counter";
 import { formatPublishDate, getPosts } from "@/lib/wordpress";
 import { getDictionary } from "@/i18n/get-dictionary";
 import {
-  MegaphoneIcon,
   ChatBubbleLeftRightIcon,
+  NewspaperIcon,
   PencilSquareIcon,
-  ShieldCheckIcon,
-  GlobeAltIcon,
-  SparklesIcon,
+  DocumentMagnifyingGlassIcon,
+  AcademicCapIcon,
+  MegaphoneIcon,
 } from "@heroicons/react/24/outline";
 
 const icons = [
-  { icon: MegaphoneIcon, iconClass: "expertise-icon-rose" },
-  { icon: ChatBubbleLeftRightIcon, iconClass: "expertise-icon-sage" },
+  { icon: ChatBubbleLeftRightIcon, iconClass: "expertise-icon-rose" },
+  { icon: NewspaperIcon, iconClass: "expertise-icon-sage" },
   { icon: PencilSquareIcon, iconClass: "expertise-icon-rose" },
-  { icon: ShieldCheckIcon, iconClass: "expertise-icon-charcoal" },
-  { icon: GlobeAltIcon, iconClass: "expertise-icon-sage" },
-  { icon: SparklesIcon, iconClass: "expertise-icon-rose" },
-];
-
-const partners = [
-  "Reach Out Cameroon",
-  "Paradigm Initiative",
-  "MTN Cameroon",
-  "PsyEduc Global",
-  "Rock Me Fabulous",
+  { icon: DocumentMagnifyingGlassIcon, iconClass: "expertise-icon-charcoal" },
+  { icon: AcademicCapIcon, iconClass: "expertise-icon-sage" },
+  { icon: MegaphoneIcon, iconClass: "expertise-icon-rose" },
 ];
 
 export default async function HomePage({
@@ -38,15 +32,6 @@ export default async function HomePage({
   const t = dict.home;
   const posts = await getPosts(3);
   const prefix = `/${locale}`;
-
-  const metrics = [
-    { value: "6+", label: t.metricYears },
-    { value: "30+", label: t.metricCampaigns },
-    { value: "35%", label: t.metricEngagement },
-    { value: "4", label: t.metricOrgs },
-  ];
-
-  const tagClasses = ["tag-rose", "tag-sage", "tag-rose", "tag-sage"];
 
   return (
     <>
@@ -61,10 +46,8 @@ export default async function HomePage({
               </div>
 
               <h1 id="hero-heading" className="hero-title">
-                {t.heroLine1}
-                <br />
-                <span className="hero-title-accent">{t.heroLine2}</span>
-                <br />
+                {t.heroLine1}{" "}
+                <span className="hero-title-accent">{t.heroLine2}</span>{" "}
                 {t.heroLine3}
               </h1>
 
@@ -74,60 +57,59 @@ export default async function HomePage({
                 <Link href={`${prefix}/contact`} className="btn btn-primary btn-lg">
                   {t.ctaStart}
                 </Link>
-                <Link href={`${prefix}/case-studies`} className="btn btn-outline btn-lg">
+                <Link href={`${prefix}/portfolio`} className="btn btn-outline btn-lg" style={{ borderColor: "rgba(255,255,255,0.4)", color: "white" }}>
                   {t.ctaViewCases}
                 </Link>
               </div>
             </div>
 
-            <div className="hero-visual">
-              <div className="hero-portrait">
-                <span className="hero-portrait-text" aria-hidden="true">OE</span>
-              </div>
-              <div className="hero-stat is-top">
-                <span className="hero-stat-label">Experience</span>
-                <span className="hero-stat-value">6+ Years</span>
-              </div>
-              <div className="hero-stat is-bottom">
-                <span className="hero-stat-label">Campaigns</span>
-                <span className="hero-stat-value">30+ Done</span>
-              </div>
+            <div className="hero-portrait">
+              <img
+                src="/images/hero.jpg"
+                alt="Olga Emma Elume"
+                className="hero-portrait-image"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══ PARTNER LOGOS ══ */}
-      <section aria-label="Organizations I have worked with">
+      {/* ══ OUR STORY / MISSION / VISION ══ */}
+      <section className="section" style={{ background: "var(--color-cream-dark)" }} aria-labelledby="mission-heading">
         <div className="container">
-          <div className="logo-cloud">
-            {partners.map((p) => (
-              <span key={p} className="logo-cloud-item">
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+          <h2 id="mission-heading" className="section-title">
+            {t.missionTitle}
+          </h2>
 
-      {/* ══ METRICS ══ */}
-      <section aria-label="Key achievements">
-        <div className="container">
-          <div className="metrics-bar">
-            {metrics.map((m) => (
-              <div key={m.label} className="metric">
-                <div className="metric-value">{m.value}</div>
-                <div className="metric-label">{m.label}</div>
+          <div className="mission-grid">
+            <div className="mission-card">
+              <div className="mission-card-icon mission-icon-rose" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7l-.7.7"/><path d="M9 16a5 5 0 1110 0v1H9v-1z"/><path d="M9 17h6v4H9z"/></svg>
               </div>
-            ))}
+              <h3>{t.storyLabel}</h3>
+              <p>{t.storyText}</p>
+            </div>
+            <div className="mission-card">
+              <div className="mission-card-icon mission-icon-rose" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="11"/></svg>
+              </div>
+              <h3>{t.missionLabel}</h3>
+              <p>{t.missionText}</p>
+            </div>
+            <div className="mission-card">
+              <div className="mission-card-icon mission-icon-rose" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <h3>{t.visionLabel}</h3>
+              <p>{t.visionText}</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══ EXPERTISE ══ */}
+      {/* ══ EXPERTISE (Services) ══ */}
       <section className="section" aria-labelledby="expertise-heading">
         <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">{t.expertiseEyebrow}</div>
           <h2 id="expertise-heading" className="section-title">
             {t.expertiseTitle}
           </h2>
@@ -150,81 +132,60 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* ══ FEATURED CASE STUDIES ══ */}
+      {/* ══ IMPACT STATISTICS ══ */}
       <section
-        className="section"
-        style={{ background: "var(--color-cream-dark)" }}
-        aria-labelledby="work-heading"
+        className="section stats-section"
+        aria-labelledby="stats-heading"
       >
         <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">{t.csEyebrow}</div>
-          <h2 id="work-heading" className="section-title">
-            {t.csTitle}
+          <h2 id="stats-heading" className="section-title">
+            {t.statsTitle}
           </h2>
-          <p className="section-subtitle">{t.csSubtitle}</p>
+          <p className="section-subtitle">{t.statsSubtitle}</p>
 
-          <div className="case-study-grid" style={{ marginTop: "3rem" }}>
-            {t.caseStudies.map((cs, i) => (
-              <Link
-                key={cs.slug}
-                href={`${prefix}/case-studies/${cs.slug}`}
-                className="case-study-card"
-                aria-label={`${cs.title}`}
-              >
-                <div className="case-study-visual">
-                  <span className="case-study-visual-text" aria-hidden="true">
-                    {cs.visual}
-                  </span>
-                </div>
-                <div className="case-study-body">
-                  <div className="case-study-tags">
-                    {cs.tags.map((tag) => (
-                      <span key={tag} className={`tag ${tagClasses[i]}`}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h3>{cs.title}</h3>
-                  <p>{cs.desc}</p>
-                  <span className="case-study-link">
-                    {dict.caseStudiesPage.viewDetails} <span aria-hidden="true">&rarr;</span>
-                  </span>
-                </div>
-              </Link>
-            ))}
+          <div style={{ marginTop: "3rem" }}>
+            <StatsCounter stats={t.stats} />
+          </div>
+        </div>
+      </section>
+
+      {/* ══ PORTFOLIO ══ */}
+      <section
+        className="section"
+        aria-labelledby="portfolio-heading"
+      >
+        <div className="container">
+          <h2 id="portfolio-heading" className="section-title">
+            {t.portfolioTitle}
+          </h2>
+          <p className="section-subtitle">{t.portfolioSubtitle}</p>
+
+          <div style={{ marginTop: "3rem" }}>
+            <PortfolioGrid
+              items={t.portfolioItems}
+              labels={{
+                modalActivity: dict.portfolioPage.modalActivity,
+                modalRole: dict.portfolioPage.modalRole,
+                modalImpact: dict.portfolioPage.modalImpact,
+                closeModal: dict.portfolioPage.closeModal,
+              }}
+            />
           </div>
 
           <div style={{ textAlign: "center", marginTop: "3rem" }}>
-            <Link href={`${prefix}/case-studies`} className="btn btn-outline">
-              {t.csViewAll}
+            <Link href={`${prefix}/portfolio`} className="btn btn-outline">
+              {t.portfolioViewAll}
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ══ PROCESS ══ */}
-      <section className="section" aria-labelledby="process-heading">
-        <div className="container">
-          <div className="section-eyebrow" aria-hidden="true">{t.processEyebrow}</div>
-          <h2 id="process-heading" className="section-title">
-            {t.processTitle}
-          </h2>
-          <p className="section-subtitle">{t.processSubtitle}</p>
-
-          <div className="process-grid">
-            {t.processSteps.map((s) => (
-              <div key={s.num} className="process-step">
-                <div className="process-num">{s.num}</div>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ══ TESTIMONIALS ══ */}
-      <section className="section" aria-labelledby="testimonials-heading">
+      <section
+        className="section"
+        style={{ background: "var(--color-cream-dark)" }}
+        aria-labelledby="testimonials-heading"
+      >
         <div className="container">
           <div className="section-eyebrow" aria-hidden="true">{t.testimonialsEyebrow}</div>
           <h2 id="testimonials-heading" className="section-title">
@@ -253,7 +214,6 @@ export default async function HomePage({
       {/* ══ BLOG PREVIEW ══ */}
       <section
         className="section blog-section"
-        style={{ background: "var(--color-cream-dark)" }}
         aria-labelledby="blog-heading"
       >
         <div className="container">

@@ -9,6 +9,7 @@ const en = {
     home: "Home",
     about: "About",
     caseStudies: "Case Studies",
+    portfolio: "Portfolio",
     services: "Services",
     blog: "Blog",
     contact: "Contact",
@@ -39,124 +40,158 @@ const en = {
 
   /* ═══ METADATA ═══ */
   meta: {
-    siteTitle: "Olga Emma Elume | Strategic Communications Consultant in Cameroon & Africa",
+    siteTitle: "Olga Emma Elume | Communications Officer & Humanitarian Professional in Cameroon & Africa",
     siteDescription:
-      "Olga Emma Elume is a strategic communications consultant based in Cameroon with 6+ years of experience in media relations, campaign strategy, crisis communications, advocacy, and content strategy across Africa.",
+      "I'm Olga Emma Elume, a communications professional based in Cameroon with 6+ years of experience in media relations, campaign strategy, press work, advocacy, and content creation across Africa.",
     ogDescription:
-      "Strategic communications consultant specializing in media relations, campaign strategy, and advocacy across Africa. Helping organizations communicate with clarity and impact.",
+      "I help people and organizations communicate clearly through strong campaigns, media relations, and practical communication support.",
   },
 
   /* ═══ HOMEPAGE ═══ */
   home: {
     heroStatus: "Available for new opportunities",
-    heroLine1: "Strategic",
-    heroLine2: "Communications",
+    heroLine1: "Humanitarian &",
+    heroLine2: "Social Impact",
     heroLine3: "Professional",
     heroDesc:
-      "I build communication strategies and campaigns that help organizations speak clearly, earn trust, and create real impact.",
-    ctaStart: "Start a Project",
-    ctaViewCases: "View Case Studies",
+      "With 6+ years of experience in strategic communications, I develop impactful campaigns, manage media relations, facilitate trainings, and lead advocacy initiatives that create real change in communities across Africa.",
+    ctaStart: "Get in Touch",
+    ctaViewCases: "View My Work",
 
-    metricYears: "Years Experience",
-    metricCampaigns: "Campaigns Delivered",
-    metricEngagement: "Avg. Engagement Increase",
-    metricOrgs: "Organizations Served",
+    /* ── Mission & Vision ── */
+    missionEyebrow: "Purpose",
+    missionTitle: "My Story, Mission & Vision",
+    storyLabel: "My Story",
+    storyText:
+      "I have spent the last 6+ years building campaigns, managing media relationships, and creating content that people can actually connect with. I know how to adjust the message for different audiences and keep the work grounded in real people and real issues.",
+    missionLabel: "My Mission",
+    missionText:
+      "My mission is to use communication, advocacy, and learning spaces to help people feel informed, included, and heard.",
+    visionLabel: "My Vision",
+    visionText:
+      "I want to be part of a world where digital rights are protected, gender equity is taken seriously, and humanitarian work is shaped by the people closest to the issue.",
 
+    /* ── Impact Statistics ── */
+    statsEyebrow: "Impact in Numbers",
+    statsTitle: "Measurable Change",
+    statsSubtitle:
+      "A quick look at the work I've done so far.",
+    stats: [
+      { value: "6", suffix: "+", label: "Years of Experience" },
+      { value: "30", suffix: "+", label: "Campaigns Led" },
+      { value: "100", suffix: "+", label: "Content Pieces Published" },
+      { value: "800", suffix: "+", label: "People Reached" },
+    ],
+
+    /* ── Portfolio ── */
+    portfolioEyebrow: "My Work",
+    portfolioTitle: "Portfolio",
+    portfolioSubtitle:
+      "This is a look at the workshops, trainings, conversations, and community work I have been part of. Click any image to see what I did and what came out of it.",
+    portfolioViewAll: "View Full Portfolio",
+    portfolioItems: [
+      {
+        id: "advocacy-training",
+        title: "Advocacy & Training",
+        category: "Workshop",
+        image: "/images/portfolio/advocacy-training.jpg",
+        activity:
+          "Facilitated multi-day advocacy training workshops focused on equipping community leaders with the skills to champion human rights and influence local policy.",
+        role: "Lead Facilitator & Trainer",
+        impact:
+          "Participants developed actionable advocacy plans that were later presented to local government bodies, resulting in increased dialogue between communities and policymakers.",
+      },
+      {
+        id: "digital-rights-panel",
+        title: "Digital Rights Panel",
+        category: "Panel Discussion",
+        image: "/images/portfolio/digital-rights-panel.jpg",
+        activity:
+          "Served as a panelist at a regional forum on digital rights, discussing internet freedom, data privacy, and the digital divide across African nations.",
+        role: "Panelist & Speaker",
+        impact:
+          "The discussion generated cross-sector commitments to support digital inclusion policies and raised awareness among 200+ attendees about threats to online freedoms.",
+      },
+      {
+        id: "community-gbv-training",
+        title: "Community Training on GBV",
+        category: "Community Training",
+        image: "/images/portfolio/community-gbv-training.jpg",
+        activity:
+          "Organized and led community training sessions with men and boys focused on understanding, preventing, and responding to gender-based violence.",
+        role: "Organizer & Trainer",
+        impact:
+          "Over 150 men participated across multiple sessions, leading to the formation of local male advocacy groups that continue to champion gender equity in their communities.",
+      },
+      {
+        id: "youth-workshop",
+        title: "Youth Empowerment Workshop",
+        category: "Workshop",
+        image: "/images/portfolio/youth-workshop.jpg",
+        activity:
+          "Designed and facilitated youth empowerment workshops centered on civic engagement, digital literacy, and leadership development for young people.",
+        role: "Workshop Designer & Facilitator",
+        impact:
+          "Over 100 young people gained practical skills in advocacy, digital tools, and community organizing that they continue to apply in their local contexts.",
+      },
+      {
+        id: "humanitarian-response",
+        title: "Humanitarian Response Coordination",
+        category: "Program Facilitation",
+        image: "/images/portfolio/humanitarian-response.jpg",
+        activity:
+          "Coordinated community-level humanitarian response programs, ensuring that affected populations were reached with timely information, resources, and support.",
+        role: "Program Coordinator & Facilitator",
+        impact:
+          "Streamlined communication between field teams and communities, improving response times and ensuring more equitable distribution of resources to vulnerable populations.",
+      },
+      {
+        id: "media-literacy",
+        title: "Media Literacy Campaign",
+        category: "Campaign",
+        image: "/images/portfolio/media-literacy.jpg",
+        activity:
+          "Led a media literacy campaign to help community members identify misinformation, understand their digital rights, and engage responsibly with online platforms.",
+        role: "Campaign Lead & Trainer",
+        impact:
+          "The campaign reached over 500 community members through workshops and social media outreach, contributing to more informed and critical engagement with digital media.",
+      },
+    ],
+
+    /* ── Expertise ── */
     expertiseEyebrow: "Areas of Expertise",
     expertiseTitle: "What I Do",
     expertiseSubtitle:
-      "My work brings together strategy, media, advocacy, and digital storytelling shaped by more than six years of hands-on experience.",
+      "My work sits across communication, advocacy, training, and community engagement.",
 
     expertiseItems: [
       {
         title: "Strategic Communications",
-        desc: "I shape communication strategies that are practical, focused, and tied to clear goals.",
+        desc: "I help shape clear communication plans that fit the audience, the moment, and the goal.",
       },
       {
-        title: "Media Relations",
-        desc: "I work with journalists, prepare spokespeople, and create media moments that support the bigger story.",
+        title: "Media Relations & Press",
+        desc: "I write press materials, work with journalists, and help manage communication when the stakes are high.",
       },
       {
-        title: "Content Strategy",
-        desc: "I plan and write content across channels, from press materials to social campaigns and long-form pieces.",
+        title: "Content Creation",
+        desc: "I create content people can read, understand, and respond to, from reports to social posts.",
       },
       {
-        title: "Crisis Communications",
-        desc: "I help teams respond calmly, communicate clearly, and protect trust when pressure is high.",
+        title: "Research & Documentation",
+        desc: "I turn research, notes, and field insight into clear information that people can use.",
+      },
+      {
+        title: "Training & Capacity Building",
+        desc: "I plan and lead sessions that help teams and communities build practical communication skills.",
       },
       {
         title: "Advocacy & Campaigns",
-        desc: "I design campaigns that speak to policymakers, communities, and young people in ways that feel grounded and persuasive.",
-      },
-      {
-        title: "Brand Strategy",
-        desc: "I help brands sound more consistent, more human, and more memorable.",
+        desc: "I lead campaigns that bring the right people into the conversation and move the message forward.",
       },
     ],
 
-    csEyebrow: "Portfolio",
-    csTitle: "Featured Case Studies",
-    csSubtitle:
-      "Selected projects that demonstrate measurable communications impact across campaigns, media, and advocacy.",
-    csViewAll: "View All Case Studies",
-    caseStudies: [
-      {
-        slug: "reach-out-cameroon",
-        tags: ["Campaigns", "Content Strategy"],
-        title: "Reach Out Cameroon",
-        desc: "I led more than 30 multi-channel campaigns and helped raise engagement by 35% across key audiences.",
-        visual: "ROC",
-      },
-      {
-        slug: "paradigm-initiative",
-        tags: ["Research", "Advocacy"],
-        title: "Paradigm Initiative",
-        desc: "I supported research, presented findings internationally, and helped strengthen visibility for digital rights work across Africa.",
-        visual: "PI",
-      },
-      {
-        slug: "rock-me-fabulous",
-        tags: ["Social Media", "Brand"],
-        title: "Rock Me Fabulous",
-        desc: "Managed social platforms achieving 60% follower growth, boosted brand visibility through innovative campaigns and proactive crisis management.",
-        visual: "RMF",
-      },
-      {
-        slug: "psyeduc-global",
-        tags: ["Nonprofit", "PR"],
-        title: "PsyEduc Global Cameroon",
-        desc: "Developed a comprehensive communication strategy increasing public engagement by 45%, managed social media and organized press conferences.",
-        visual: "PG",
-      },
-    ],
-
-    processEyebrow: "My Approach",
-    processTitle: "How I Work",
-    processSubtitle:
-      "A structured, collaborative process designed to deliver results at every stage.",
-    processSteps: [
-      {
-        num: "01",
-        title: "Listen & Research",
-        desc: "I start by deeply understanding your organization, audience, challenges, and goals through stakeholder interviews and landscape research.",
-      },
-      {
-        num: "02",
-        title: "Strategize",
-        desc: "Based on insights, I develop a tailored communication strategy with clear objectives, key messages, channels, and measurable KPIs.",
-      },
-      {
-        num: "03",
-        title: "Create & Execute",
-        desc: "I create the content, launch the work, and keep everything aligned across teams, timelines, and channels.",
-      },
-      {
-        num: "04",
-        title: "Measure & Optimize",
-        desc: "I track campaign performance against KPIs, analyze what works, and continuously refine strategy to maximize impact and ROI.",
-      },
-    ],
-
+    /* ── Testimonials ── */
     testimonialsEyebrow: "Testimonials",
     testimonialsTitle: "Kind Words",
     testimonials: [
@@ -164,50 +199,52 @@ const en = {
         quote:
           "Working together felt seamless from start to finish. Our goals were understood quickly, the right questions were asked, and the final campaign exceeded expectations.",
         name: "Team Lead",
-        role: "Reach Out Cameroon",
+        role: "International Development Organization",
       },
       {
         quote:
           "Our advocacy vision finally sounded clear and human. The messaging balanced strategy with empathy and gave us something we were proud to share.",
         name: "Program Director",
-        role: "PsyEduc Global Cameroon",
+        role: "Mental Health Advocacy Organization",
       },
     ],
 
+    /* ── Blog ── */
     blogEyebrow: "Latest Insights",
     blogTitle: "From the Blog",
     blogViewAll: "View All Articles",
 
+    /* ── CTA ── */
     ctaEyebrow: "Start a Conversation",
     ctaTitle: "Let's Create Impact Together",
     ctaDesc:
-      "Ready to elevate your communications strategy? I'd love to hear about your project and explore how we can work together.",
+      "If you need someone to support a campaign, lead a training, or help you communicate more clearly, I'd love to hear from you.",
     ctaButton: "Get in Touch",
   },
 
   /* ═══ ABOUT ═══ */
   about: {
-    metaTitle: "About Olga Emma Elume | Communications Consultant & Media Relations Specialist — Cameroon",
+    metaTitle: "About Olga Emma Elume | Communications Officer & Media Relations Specialist — Cameroon",
     metaDescription:
-      "Learn about Olga Emma Elume, a strategic communications consultant with 6+ years in media relations, crisis communications, advocacy campaigns, and content strategy. Based in Cameroon, serving organizations across Africa.",
+      "I'm Olga Emma Elume. I work in communications, media relations, advocacy, and content strategy, and I'm based in Cameroon.",
     eyebrow: "About Me",
     heading:
       "I'm Olga Emma Elume, and I build communication that feels clear, credible, and useful.",
     bio1: "Over the past six years, I have worked across nonprofit, tech, media, and advocacy spaces, helping organizations communicate with more intention.",
-    bio2: "My work covers campaign strategy, media relations, crisis communication, advocacy, and content creation, always shaped by research, empathy, and measurable goals.",
-    bio3: "I am based in Buea, Cameroon, and I have worked with organizations such as Reach Out Cameroon, Paradigm Initiative, MTN Cameroon, and PsyEduc Global on projects that speak to communities, policymakers, and young audiences.",
+    bio2: "My work includes campaign strategy, media relations, crisis communication, advocacy, and content creation. I try to keep my work clear, thoughtful, and useful.",
+    bio3: "I'm based in Buea, Cameroon, and I've worked across nonprofit, research, telecommunications, and advocacy spaces on projects that speak to communities, policymakers, and young people.",
     ctaContact: "Get in Touch",
     ctaCV: "Download CV",
 
     expEyebrow: "Career Journey",
     expTitle: "Professional Experience",
     expSubtitle:
-      "A timeline of the roles that shaped how I lead campaigns, manage messaging, and support organizations with practical communication work across Africa.",
+      "These are the roles that shaped how I work, think, and communicate.",
     experience: [
       {
         role: "Researcher",
-        company: "Paradigm Initiative",
-        location: "Lagos, Nigeria (Remote)",
+        company: "International Digital Rights Organization",
+        location: "Nigeria (Remote)",
         type: "Contract",
         dates: "2025 — Present",
         summary:
@@ -219,12 +256,12 @@ const en = {
       },
       {
         role: "Communications Officer",
-        company: "Reach Out Cameroon",
+        company: "Community Development NGO",
         location: "Buea, Cameroon",
         type: "Full-time",
         dates: "2023 — Present",
         summary:
-          "I lead communication work across campaigns, advocacy, media, and audience engagement for one of the strongest impact stories in my portfolio.",
+          "I lead communication work across campaigns, advocacy, media, and audience engagement.",
         highlights: [
           "Led 30+ multi-channel campaigns and helped raise engagement by 35%.",
           "Built clearer messaging for policymakers, communities, and youth audiences.",
@@ -232,12 +269,12 @@ const en = {
       },
       {
         role: "Administrative Assistant",
-        company: "Reach Out Cameroon",
+        company: "Community Development NGO",
         location: "Buea, Cameroon",
         type: "Full-time",
         dates: "2023 — Present",
         summary:
-          "Alongside communications work, I support coordination, internal organization, and day-to-day follow-through that keeps projects moving.",
+          "Alongside communications work, I also support coordination, internal systems, and the day-to-day follow-through that keeps projects moving.",
         highlights: [
           "Support operations, scheduling, documentation, and cross-team coordination.",
           "Help maintain consistency between planning, execution, and reporting.",
@@ -245,12 +282,12 @@ const en = {
       },
       {
         role: "Sector Sales Agent",
-        company: "MTN Cameroon",
+        company: "Telecommunications Company",
         location: "Buea, Cameroon",
         type: "Full-time",
         dates: "2022 — 2023",
         summary:
-          "This role strengthened how I listen to people, understand what matters to them, and communicate value clearly and quickly.",
+          "This role taught me how to listen carefully, understand what people need, and explain value in a simple way.",
         highlights: [
           "Worked directly with customers in a fast-paced, target-driven environment.",
           "Built practical communication and relationship management discipline.",
@@ -258,12 +295,12 @@ const en = {
       },
       {
         role: "Communications Volunteer",
-        company: "PsyEduc Global Cameroon",
+        company: "Mental Health Advocacy Organization",
         location: "Buea, Cameroon",
         type: "Volunteer",
         dates: "2022 — 2023",
         summary:
-          "I helped shape communication for mental health advocacy with messaging that needed both care and clarity.",
+          "I supported communication work around mental health advocacy with messaging that needed care, clarity, and sensitivity.",
         highlights: [
           "Developed communication support that contributed to a 45% increase in engagement.",
           "Supported press events, awareness campaigns, and social media execution.",
@@ -271,12 +308,12 @@ const en = {
       },
       {
         role: "Social Media Manager",
-        company: "Rock Me Fabulous",
-        location: "Douala, Cameroon",
+        company: "Fashion & Lifestyle Brand",
+        location: "Buea, Cameroon",
         type: "Freelance",
         dates: "2019 — 2022",
         summary:
-          "I managed social media growth, content planning, and brand consistency while helping the business communicate with more confidence.",
+          "I managed social media growth, content planning, and brand consistency while helping the brand show up more clearly and confidently.",
         highlights: [
           "Grew followers by 60% through stronger content direction and consistency.",
           "Introduced proactive crisis communication structure for the brand.",
@@ -288,9 +325,9 @@ const en = {
     eduTitle: "Academic Background",
     education: [
       {
-        degree: "B.A. Journalism & Mass Communication",
+        degree: "Bachelor of Science, Economics",
         institution: "University of Buea",
-        dates: "2016 — 2019",
+        dates: "2016",
       },
       {
         degree: "Professional Certificate in Digital Marketing",
@@ -304,16 +341,16 @@ const en = {
     competencies: [
       "Strategic Communications",
       "Media Relations",
+      "Press Release Writing",
+      "Marketing Communications",
+      "Photography",
       "Content Creation",
       "Crisis Management",
-      "Campaign Strategy",
-      "Stakeholder Engagement",
-      "Digital Marketing",
-      "Research & Analysis",
-      "Event Management",
-      "Brand Strategy",
+      "Research & Documentation",
+      "Qualitative & Quantitative Research",
+      "Problem-Solving",
+      "Teamwork & Collaboration",
       "Social Media Management",
-      "Public Speaking",
     ],
 
     processEyebrow: "Methodology",
@@ -322,12 +359,12 @@ const en = {
       {
         num: "01",
         title: "Listen & Research",
-        desc: "I start by deeply understanding your organization, audience, challenges, and goals through stakeholder interviews, audience analysis, and landscape research.",
+        desc: "I start by understanding your work, your audience, and what you're trying to solve.",
       },
       {
         num: "02",
         title: "Strategize",
-        desc: "Based on insights, I develop a tailored communication strategy with clear objectives, key messages, channel mix, and measurable KPIs.",
+        desc: "Then I build a practical plan with clear messages, simple priorities, and a realistic way forward.",
       },
       {
         num: "03",
@@ -337,7 +374,7 @@ const en = {
       {
         num: "04",
         title: "Measure & Optimize",
-        desc: "I track campaign performance against KPIs, analyze what works, and continuously refine strategy to maximize impact and ROI.",
+        desc: "I pay attention to what is working, what is not, and what needs to change.",
       },
     ],
 
@@ -363,15 +400,15 @@ const en = {
   services: {
     metaTitle: "Strategic Communications Services | Media Relations, Campaign Strategy & Crisis Communications",
     metaDescription:
-      "Hire a strategic communications consultant for campaign strategy, media relations, content creation, crisis communications, advocacy campaigns, and brand messaging. Based in Cameroon, serving organizations across Africa.",
+      "I offer support with campaign strategy, media relations, content creation, crisis communication, advocacy work, and brand messaging.",
     eyebrow: "What I Offer",
     title: "Services",
     subtitle:
-      "I offer communication support that meets you where you are, whether you need strategy, content, media support, or help navigating a difficult moment.",
+      "If you need support with strategy, content, media work, or a difficult communication moment, I can help.",
     ctaEyebrow: "Ready to Start?",
     ctaTitle: "Let's Work Together",
     ctaDesc:
-      "Every engagement begins with a conversation. Tell me about your communications challenges and let's explore how I can help.",
+      "Everything starts with a conversation. Tell me what you need, and I'll let you know how I can help.",
     ctaButton: "Start a Conversation",
     items: [
       {
@@ -389,7 +426,7 @@ const en = {
       {
         id: "media-relations",
         title: "Media Relations",
-        desc: "Building and nurturing strategic media relationships to secure impactful coverage and amplify your organization's voice.",
+        desc: "I help you speak to the media clearly and build stronger relationships with journalists.",
         features: [
           "Media list development & journalist outreach",
           "Press release writing & distribution",
@@ -413,7 +450,7 @@ const en = {
       {
         id: "crisis",
         title: "Crisis Communications",
-        desc: "Proactive crisis preparedness and rapid response to protect your reputation and maintain stakeholder trust.",
+        desc: "I help you prepare for difficult moments and respond in a calm, clear way when they happen.",
         features: [
           "Crisis communication plan development",
           "Rapid response protocol design",
@@ -425,7 +462,7 @@ const en = {
       {
         id: "advocacy",
         title: "Advocacy & Campaigns",
-        desc: "Strategic advocacy campaigns that influence policy, shift public opinion, and mobilize communities for social impact.",
+        desc: "I help build campaigns that bring people in, make the message clear, and support real change.",
         features: [
           "Advocacy strategy & campaign design",
           "Policy brief writing & dissemination",
@@ -437,7 +474,7 @@ const en = {
       {
         id: "brand",
         title: "Brand Strategy",
-        desc: "Shaping brand identity and positioning through strategic messaging, visual storytelling, and consistent audience engagement.",
+        desc: "I help shape how your work is understood, remembered, and trusted.",
         features: [
           "Brand audit & positioning strategy",
           "Brand voice & messaging guidelines",
@@ -449,19 +486,19 @@ const en = {
     ],
     faq: [
       {
-        question: "What communications services does Olga Emma Elume offer?",
+        question: "What kind of communication work do I do?",
         answer:
-          "I offer strategic communications, media relations, content strategy and creation, crisis communications, advocacy campaigns, and brand messaging support. My work is especially relevant for nonprofits, NGOs, and mission-driven organizations.",
+          "I work across strategic communications, media relations, content, crisis communication, advocacy campaigns, and brand messaging. Most of my work is with nonprofits, civil society groups, and mission-driven teams.",
       },
       {
-        question: "Is Olga Emma Elume available for remote or international projects?",
+        question: "Am I available for remote or international projects?",
         answer:
-          "Yes. I am based in Buea, Cameroon, and I am open to both local and international work, including remote engagements.",
+          "Yes. I'm based in Buea, Cameroon, and I'm open to local, remote, and international work.",
       },
       {
-        question: "What industries does Olga specialize in?",
+        question: "What kind of sectors do I work in most?",
         answer:
-          "My strongest experience is in nonprofit, NGO, and civil society communications, especially in advocacy, digital rights, public health, and youth-focused work.",
+          "Most of my experience is in nonprofit and civil society communication, especially around advocacy, digital rights, public health, and youth-focused work.",
       },
     ],
   },
@@ -482,39 +519,39 @@ const en = {
     ctaButton: "Start a Conversation",
     items: [
       {
-        slug: "reach-out-cameroon",
+        slug: "community-campaigns",
         tags: ["Campaigns", "Content Strategy", "Advocacy"],
-        title: "Reach Out Cameroon",
-        subtitle: "Multi-channel campaigns driving policy engagement & youth outreach",
+        title: "Multi-Channel Community Campaigns",
+        subtitle: "Data-driven campaigns driving policy engagement & youth outreach",
         desc: "I led more than 30 multi-channel campaigns and helped grow overall engagement by 35%.",
-        visual: "ROC",
+        visual: "CC",
         metrics: ["30+ Campaigns", "35% Engagement Lift", "2+ Years"],
       },
       {
-        slug: "paradigm-initiative",
+        slug: "digital-rights-research",
         tags: ["Research", "Advocacy", "International"],
-        title: "Paradigm Initiative",
+        title: "Digital Rights Research & Advocacy",
         subtitle: "Research visibility & international conference presentations",
         desc: "I supported research, presented findings at international conferences, and helped expand visibility for the work.",
-        visual: "PI",
+        visual: "DR",
         metrics: ["Pan-African Reach", "Conference Speaker", "Published Research"],
       },
       {
-        slug: "rock-me-fabulous",
+        slug: "brand-social-media",
         tags: ["Social Media", "Brand", "Crisis Mgmt"],
-        title: "Rock Me Fabulous",
+        title: "Brand & Social Media Growth",
         subtitle: "Social media growth & proactive crisis communications",
         desc: "Managed social platforms achieving 60% follower growth, boosted brand visibility through innovative campaigns and implemented proactive crisis management protocols.",
-        visual: "RMF",
+        visual: "SM",
         metrics: ["60% Follower Growth", "3 Years", "Crisis Protocols"],
       },
       {
-        slug: "psyeduc-global",
+        slug: "mental-health-comms",
         tags: ["Nonprofit", "PR", "Events"],
-        title: "PsyEduc Global Cameroon",
+        title: "Mental Health Advocacy Communications",
         subtitle: "Communication strategy & press conference management",
         desc: "Developed a comprehensive communication strategy increasing public engagement by 45%, managed social media, and organized press conferences for global awareness days.",
-        visual: "PG",
+        visual: "MH",
         metrics: ["45% Engagement Increase", "Press Conferences", "Global Days"],
       },
     ],
@@ -532,17 +569,17 @@ const en = {
     results: "Results & Impact",
     backToAll: "← All Case Studies",
     data: {
-      "reach-out-cameroon": {
-        title: "Reach Out Cameroon",
-        subtitle: "Multi-channel campaigns driving policy engagement & youth outreach",
+      "community-campaigns": {
+        title: "Multi-Channel Community Campaigns",
+        subtitle: "Data-driven campaigns driving policy engagement & youth outreach",
         role: "Communications Officer",
         timeline: "2023 - Present",
         tools: ["Canva", "Mailchimp", "WordPress", "Social Media Platforms", "Google Analytics"],
         tags: ["Campaigns", "Content Strategy", "Advocacy"],
-        visual: "ROC",
+        visual: "CC",
         tldr: "Led 30+ multi-channel communication campaigns targeting policymakers, youth leaders, and rural populations, achieving a 35% increase in engagement rates across all channels.",
         challenge:
-          "Reach Out Cameroon needed a clearer way to speak to very different audiences, from rural communities with limited internet access to policymakers who needed strong, evidence-based messaging. Without one communication direction, the messaging felt fragmented and engagement stayed low.",
+          "The organization needed a clearer way to speak to very different audiences, from rural communities with limited internet access to policymakers who needed strong, evidence-based messaging. Without one communication direction, the messaging felt fragmented and engagement stayed low.",
         approach:
           "I developed a comprehensive multi-channel communication strategy that tailored messaging for each audience segment. For rural communities, I prioritized radio, community events, and print materials. For policymakers, I crafted data-backed policy briefs and organized targeted media events. For youth, I led vibrant social media campaigns with shareable content. I also established a content calendar, trained team members on brand consistency, and implemented analytics tracking to measure campaign performance.",
         deliverables: [
@@ -559,17 +596,17 @@ const en = {
           { value: "12+", label: "Media Placements" },
         ],
       },
-      "paradigm-initiative": {
-        title: "Paradigm Initiative",
+      "digital-rights-research": {
+        title: "Digital Rights Research & Advocacy",
         subtitle: "Research visibility & international conference presentations across Africa",
         role: "Researcher",
         timeline: "2025 - Present",
         tools: ["Academic Databases", "Zotero", "Presentation Software", "Research Frameworks"],
         tags: ["Research", "Advocacy", "International"],
-        visual: "PI",
+        visual: "DR",
         tldr: "Conducting literature reviews and presenting findings at international conferences to increase research visibility on digital rights and inclusion across Africa.",
         challenge:
-          "Paradigm Initiative needed to strengthen its evidence base for digital rights advocacy across Africa. Existing research was scattered, and findings lacked the visibility needed to influence policy conversations at the continental and international levels.",
+          "The organization needed to strengthen its evidence base for digital rights advocacy across Africa. Existing research was scattered, and findings lacked the visibility needed to influence policy conversations at the continental and international levels.",
         approach:
           "I systematically conducted comprehensive literature reviews on digital rights, internet freedom, and digital inclusion across African nations. I synthesized findings into accessible research reports and presented key insights at international conferences, translating complex data into compelling narratives that resonated with policymakers, academics, and civil society leaders.",
         deliverables: [
@@ -585,17 +622,17 @@ const en = {
           { value: "Ongoing", label: "Research Impact" },
         ],
       },
-      "rock-me-fabulous": {
-        title: "Rock Me Fabulous",
+      "brand-social-media": {
+        title: "Brand & Social Media Growth",
         subtitle: "Social media growth & proactive crisis communications",
         role: "Social Media Manager",
         timeline: "2019 - 2022",
         tools: ["Hootsuite", "Canva", "Instagram", "Facebook", "Analytics Tools"],
         tags: ["Social Media", "Brand", "Crisis Management"],
-        visual: "RMF",
+        visual: "SM",
         tldr: "Managed social media platforms achieving 60% follower growth, boosted brand visibility through innovative campaigns, and implemented proactive crisis management protocols.",
         challenge:
-          "Rock Me Fabulous was growing, but its social presence felt inconsistent, engagement was low, and there was no clear plan for handling brand issues if they came up.",
+          "The brand was growing, but its social presence felt inconsistent, engagement was low, and there was no clear plan for handling brand issues if they came up.",
         approach:
           "I developed a structured social media strategy with content pillars, a consistent posting schedule, and engagement protocols. I created visually cohesive content that aligned with the brand identity, implemented A/B testing for content types, and established a crisis communication framework with escalation procedures and pre-approved response templates.",
         deliverables: [
@@ -612,17 +649,17 @@ const en = {
           { value: "0", label: "Crisis Escalations" },
         ],
       },
-      "psyeduc-global": {
-        title: "PsyEduc Global Cameroon",
+      "mental-health-comms": {
+        title: "Mental Health Advocacy Communications",
         subtitle: "Communication strategy & press conference management for mental health advocacy",
         role: "Communications Volunteer",
         timeline: "2022 - 2023",
         tools: ["WordPress", "Canva", "Social Media Platforms", "Email Marketing", "Press Outreach"],
         tags: ["Nonprofit", "PR", "Events"],
-        visual: "PG",
+        visual: "MH",
         tldr: "Developed a comprehensive communication strategy increasing public engagement by 45%, managed social media, and organized press conferences for global awareness days.",
         challenge:
-          "PsyEduc Global Cameroon, a mental health advocacy organization, had limited public visibility despite doing critical work. They needed a communication strategy that could raise awareness while handling the sensitivity of mental health topics with appropriate care.",
+          "A mental health advocacy organization had limited public visibility despite doing critical work. They needed a communication strategy that could raise awareness while handling the sensitivity of mental health topics with appropriate care.",
         approach:
           "I designed a communication strategy centered on empathy and education, using storytelling to destigmatize mental health conversations. I created content calendars aligned with global awareness days (World Mental Health Day, etc.), organized press conferences to generate earned media, and managed social media channels to build a supportive online community.",
         deliverables: [
@@ -640,6 +677,21 @@ const en = {
         ],
       },
     },
+  },
+
+  /* ═══ PORTFOLIO PAGE ═══ */
+  portfolioPage: {
+    metaTitle: "Portfolio | Humanitarian & Social Impact Work",
+    metaDescription:
+      "Explore my portfolio of humanitarian activities including advocacy workshops, digital rights panels, community trainings, and gender-based violence prevention programs.",
+    eyebrow: "My Work",
+    title: "Portfolio",
+    subtitle:
+      "A visual collection of the activities, workshops, and community programs I've facilitated and contributed to. Click any image to learn more about the work.",
+    modalActivity: "Activity",
+    modalRole: "My Role",
+    modalImpact: "Impact & Outcomes",
+    closeModal: "Close",
   },
 
   /* ═══ BLOG ═══ */
@@ -722,19 +774,19 @@ const en = {
     lastUpdated: "Last updated",
     sections: [
       {
-        heading: "Information We Collect",
+        heading: "Information I Collect",
         content:
-          "When you use the contact form on this website, we collect the personal information you provide: your name, email address, organization, inquiry type, and message content. We do not collect any personal data automatically through cookies or tracking scripts.",
+          "When you use the contact form on this website, I collect the information you choose to share, such as your name, email address, organization, inquiry type, and message. I do not collect personal data automatically through cookies or tracking scripts.",
       },
       {
-        heading: "How We Use Your Information",
+        heading: "How I Use Your Information",
         content:
           "I use the information you share through the contact form only to respond to your message. I do not sell, share, or distribute your personal data to third parties.",
       },
       {
         heading: "Data Storage & Security",
         content:
-          "Your data is transmitted securely and stored with appropriate safeguards. We retain your information only as long as necessary to respond to and follow up on your inquiry. After that, the data is securely deleted.",
+          "Your data is transmitted securely and stored with appropriate safeguards. I keep your information only as long as needed to respond to and follow up on your message. After that, it is securely deleted.",
       },
       {
         heading: "Your Rights",
@@ -744,7 +796,7 @@ const en = {
       {
         heading: "Changes to This Policy",
         content:
-          "We may update this privacy policy from time to time. Any changes will be posted on this page with an updated date.",
+          "I may update this privacy policy from time to time. Any changes will be posted on this page with an updated date.",
       },
       {
         heading: "Contact",

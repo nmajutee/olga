@@ -41,7 +41,7 @@ export function Footer() {
             <div className="footer-links">
               <Link href={prefix} className="footer-link">{dict.nav.home}</Link>
               <Link href={`${prefix}/about`} className="footer-link">{dict.nav.about}</Link>
-              <Link href={`${prefix}/case-studies`} className="footer-link">{dict.nav.caseStudies}</Link>
+              <Link href={`${prefix}/portfolio`} className="footer-link">{dict.nav.portfolio}</Link>
               <Link href={`${prefix}/services`} className="footer-link">{dict.nav.services}</Link>
               <Link href={`${prefix}/blog`} className="footer-link">{dict.nav.blog}</Link>
             </div>

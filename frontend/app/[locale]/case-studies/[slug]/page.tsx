@@ -28,10 +28,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export function generateStaticParams() {
   return [
-    { slug: "reach-out-cameroon" },
-    { slug: "paradigm-initiative" },
-    { slug: "rock-me-fabulous" },
-    { slug: "psyeduc-global" },
+    { slug: "community-campaigns" },
+    { slug: "digital-rights-research" },
+    { slug: "brand-social-media" },
+    { slug: "mental-health-comms" },
   ];
 }
 

@@ -26,7 +26,7 @@ export function Navigation() {
   const navItems = [
     { href: `${prefix}`, label: dict.nav.home },
     { href: `${prefix}/about`, label: dict.nav.about },
-    { href: `${prefix}/case-studies`, label: dict.nav.caseStudies },
+    { href: `${prefix}/portfolio`, label: dict.nav.portfolio },
     { href: `${prefix}/services`, label: dict.nav.services },
     { href: `${prefix}/blog`, label: dict.nav.blog },
   ];

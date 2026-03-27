@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { Sora, Nunito_Sans } from "next/font/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { DictionaryProvider } from "@/i18n/dictionary-provider";
@@ -7,14 +7,14 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { i18n } from "@/i18n/config";
 
-const display = DM_Serif_Display({
+const display = Sora({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const body = Inter({
+const body = Nunito_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],
