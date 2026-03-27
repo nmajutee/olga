@@ -46,21 +46,33 @@ export default async function HomePage({
                 {t.heroStatus}
               </div>
 
+              <p className="hero-greeting">{t.heroGreeting}</p>
+
               <h1 id="hero-heading" className="hero-title">
-                {t.heroLine1}{" "}
-                <span className="hero-title-accent">{t.heroLine2}</span>{" "}
-                {t.heroLine3}
+                {t.heroLine1}<br />
+                {t.heroLine2}{" "}
+                <span className="hero-title-accent">{t.heroLine3}</span>
               </h1>
 
               <p className="hero-desc">{t.heroDesc}</p>
 
               <div className="hero-actions">
-                <Link href={`${prefix}/contact`} className="btn btn-primary btn-lg">
+                <Link href={`${prefix}/contact`} className="btn btn-hero-primary btn-lg">
                   {t.ctaStart}
+                  <span className="btn-arrow" aria-hidden="true">→</span>
                 </Link>
-                <Link href={`${prefix}/portfolio`} className="btn btn-outline btn-lg" style={{ borderColor: "rgba(255,255,255,0.4)", color: "white" }}>
+                <Link href={`${prefix}/portfolio`} className="btn btn-hero-ghost btn-lg">
                   {t.ctaViewCases}
                 </Link>
+              </div>
+
+              <div className="hero-trust">
+                {t.heroTrust.map((item: { value: string; label: string }, i: number) => (
+                  <div key={i} className="hero-trust-item">
+                    <span className="hero-trust-value">{item.value}</span>
+                    <span className="hero-trust-label">{item.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
 

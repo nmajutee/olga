@@ -147,29 +147,46 @@ export default async function HomePage() {
             <div>
               <div className="hero-status">
                 <span className="hero-status-dot" aria-hidden="true" />
-                Available for work
+                Open to opportunities
               </div>
 
+              <p className="hero-greeting">I&apos;m Olga Emma Elume</p>
+
               <h1 id="hero-heading" className="hero-title">
-                Humanitarian &amp;{" "}
-                <span className="hero-title-accent">Social Impact</span>{" "}
-                Professional
+                I Turn Complex Issues<br />
+                Into Clear, Powerful{" "}
+                <span className="hero-title-accent">Communication</span>
               </h1>
 
               <p className="hero-desc">
-                With 6+ years of experience in strategic communications, I develop
-                impactful campaigns, manage media relations, facilitate trainings,
-                and lead advocacy initiatives that create real change in communities
-                across Africa.
+                Strategic communications professional with 6+ years helping NGOs,
+                advocacy groups, and brands across Africa craft campaigns that
+                move people to action.
               </p>
 
               <div className="hero-actions">
-                <Link href="/contact" className="btn btn-primary btn-lg">
-                  Get in Touch
+                <Link href="/contact" className="btn btn-hero-primary btn-lg">
+                  Work With Me
+                  <span className="btn-arrow" aria-hidden="true">→</span>
                 </Link>
-                <Link href="/portfolio" className="btn btn-outline btn-lg" style={{ borderColor: "rgba(255,255,255,0.4)", color: "white" }}>
-                  View My Work
+                <Link href="/portfolio" className="btn btn-hero-ghost btn-lg">
+                  See My Portfolio
                 </Link>
+              </div>
+
+              <div className="hero-trust">
+                <div className="hero-trust-item">
+                  <span className="hero-trust-value">6+</span>
+                  <span className="hero-trust-label">Years</span>
+                </div>
+                <div className="hero-trust-item">
+                  <span className="hero-trust-value">30+</span>
+                  <span className="hero-trust-label">Campaigns</span>
+                </div>
+                <div className="hero-trust-item">
+                  <span className="hero-trust-value">800+</span>
+                  <span className="hero-trust-label">People Reached</span>
+                </div>
               </div>
             </div>
 

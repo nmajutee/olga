@@ -49,14 +49,20 @@ const fr: typeof import("./en").default = {
 
   /* ═══ HOMEPAGE ═══ */
   home: {
-    heroStatus: "Disponible pour de nouvelles opportunités",
-    heroLine1: "Professionnelle en",
-    heroLine2: "Impact Social",
-    heroLine3: "& Humanitaire",
+    heroStatus: "Ouverte aux opportunités",
+    heroGreeting: "Je suis Olga Emma Elume",
+    heroLine1: "Je transforme les enjeux complexes",
+    heroLine2: "en communication",
+    heroLine3: "claire et percutante",
     heroDesc:
-      "Avec plus de 6 ans d'expérience en communications stratégiques, je développe des campagnes percutantes, gère les relations médias, anime des formations et mène des initiatives de plaidoyer qui créent un réel changement dans les communautés en Afrique.",
-    ctaStart: "Me contacter",
-    ctaViewCases: "Voir mon travail",
+      "Professionnelle en communications stratégiques avec plus de 6 ans d'expérience au service des ONG, groupes de plaidoyer et marques à travers l'Afrique.",
+    ctaStart: "Travaillons ensemble",
+    ctaViewCases: "Voir mon portfolio",
+    heroTrust: [
+      { value: "6+", label: "Ans" },
+      { value: "30+", label: "Campagnes" },
+      { value: "800+", label: "Personnes touchées" },
+    ],
 
     /* ── Mission & Vision ── */
     missionEyebrow: "Objectif",

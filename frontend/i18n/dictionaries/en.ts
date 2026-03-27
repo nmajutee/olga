@@ -49,14 +49,20 @@ const en = {
 
   /* ═══ HOMEPAGE ═══ */
   home: {
-    heroStatus: "Available for new opportunities",
-    heroLine1: "Humanitarian &",
-    heroLine2: "Social Impact",
-    heroLine3: "Professional",
+    heroStatus: "Open to opportunities",
+    heroGreeting: "I'm Olga Emma Elume",
+    heroLine1: "I Turn Complex Issues",
+    heroLine2: "Into Clear, Powerful",
+    heroLine3: "Communication",
     heroDesc:
-      "With 6+ years of experience in strategic communications, I develop impactful campaigns, manage media relations, facilitate trainings, and lead advocacy initiatives that create real change in communities across Africa.",
-    ctaStart: "Get in Touch",
-    ctaViewCases: "View My Work",
+      "Strategic communications professional with 6+ years helping NGOs, advocacy groups, and brands across Africa craft campaigns that move people to action.",
+    ctaStart: "Work With Me",
+    ctaViewCases: "See My Portfolio",
+    heroTrust: [
+      { value: "6+", label: "Years" },
+      { value: "30+", label: "Campaigns" },
+      { value: "800+", label: "People Reached" },
+    ],
 
     /* ── Mission & Vision ── */
     missionEyebrow: "Purpose",
