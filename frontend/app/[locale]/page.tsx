@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PostCard } from "@/components/post-card";
 import { PortfolioGrid } from "@/components/portfolio-grid";
 import { StatsCounter } from "@/components/stats-counter";
+import { HeroAccordion } from "@/components/hero-accordion";
 import { formatPublishDate, getPosts } from "@/lib/wordpress";
 import { getDictionary } from "@/i18n/get-dictionary";
 import {
@@ -63,12 +64,8 @@ export default async function HomePage({
               </div>
             </div>
 
-            <div className="hero-portrait">
-              <img
-                src="/images/hero.jpg"
-                alt="Olga Emma Elume"
-                className="hero-portrait-image"
-              />
+            <div className="hero-accordion-wrapper">
+              <HeroAccordion />
             </div>
           </div>
         </div>
