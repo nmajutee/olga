@@ -40,11 +40,11 @@ const en = {
 
   /* ═══ METADATA ═══ */
   meta: {
-    siteTitle: "Olga Emma Elume | Communications Officer & Humanitarian Professional in Cameroon & Africa",
+    siteTitle: "Olga Emma Elume | Professional Communications Consultant — Africa & Cameroon",
     siteDescription:
-      "I'm Olga Emma Elume, a communications professional based in Cameroon with 6+ years of experience in media relations, campaign strategy, press work, advocacy, and content creation across Africa.",
+      "Olga Emma Elume is a professional communications consultant with 6+ years in strategic communications, media relations, advocacy, and content strategy across Africa.",
     ogDescription:
-      "I help people and organizations communicate clearly through strong campaigns, media relations, and practical communication support.",
+      "Professional communications services: campaign strategy, media relations, crisis communications, content creation, and advocacy. Hire a communications professional in Africa.",
   },
 
   /* ═══ HOMEPAGE ═══ */
@@ -230,9 +230,9 @@ const en = {
 
   /* ═══ ABOUT ═══ */
   about: {
-    metaTitle: "About Olga Emma Elume | Communications Officer & Media Relations Specialist — Cameroon",
+    metaTitle: "About | Communications Professional & Media Relations Specialist",
     metaDescription:
-      "I'm Olga Emma Elume. I work in communications, media relations, advocacy, and content strategy, and I'm based in Cameroon.",
+      "Meet Olga Emma Elume — a communications professional with 6+ years in professional communications, media relations, and strategic advocacy across Cameroon and Africa.",
     eyebrow: "About Me",
     heading:
       "I'm Olga Emma Elume, and I build communication that feels clear, credible, and useful.",
@@ -404,9 +404,9 @@ const en = {
 
   /* ═══ SERVICES ═══ */
   services: {
-    metaTitle: "Strategic Communications Services | Media Relations, Campaign Strategy & Crisis Communications",
+    metaTitle: "Professional Communications Services | Strategic, Media & Crisis",
     metaDescription:
-      "I offer support with campaign strategy, media relations, content creation, crisis communication, advocacy work, and brand messaging.",
+      "Hire a communications professional for strategic communications, media relations, content creation, crisis communications, advocacy campaigns, and brand strategy.",
     eyebrow: "What I Offer",
     title: "Services",
     subtitle:
@@ -511,9 +511,9 @@ const en = {
 
   /* ═══ CASE STUDIES (INDEX) ═══ */
   caseStudiesPage: {
-    metaTitle: "Communications Case Studies | Campaign Results & Media Relations Portfolio",
+    metaTitle: "Professional Communications Case Studies | Campaign Results & Portfolio",
     metaDescription:
-      "Explore real communications case studies showcasing campaign results, media relations work, advocacy impact, and audience growth across nonprofit, NGO, and private-sector organizations in Africa.",
+      "Real professional communications case studies: campaign results, media relations portfolio, advocacy impact, and audience growth for nonprofits and organizations in Africa.",
     eyebrow: "Portfolio",
     title: "Case Studies",
     subtitle:
@@ -687,9 +687,9 @@ const en = {
 
   /* ═══ PORTFOLIO PAGE ═══ */
   portfolioPage: {
-    metaTitle: "Portfolio | Humanitarian & Social Impact Work",
+    metaTitle: "Portfolio | Professional Communications & Social Impact Work",
     metaDescription:
-      "Explore my portfolio of humanitarian activities including advocacy workshops, digital rights panels, community trainings, and gender-based violence prevention programs.",
+      "Professional communications portfolio: advocacy workshops, digital rights panels, community trainings, and humanitarian communications programs across Africa.",
     eyebrow: "My Work",
     title: "Portfolio",
     subtitle:
@@ -702,9 +702,9 @@ const en = {
 
   /* ═══ BLOG ═══ */
   blog: {
-    metaTitle: "Communications Blog & Insights",
+    metaTitle: "Professional Communications Blog | Insights & Strategy",
     metaDescription:
-      "My thoughts on communications, media, storytelling, and the work behind strong public messaging.",
+      "Expert insights on professional communications, strategic messaging, media relations, content strategy, and effective communications for organizations.",
     eyebrow: "Insights & Perspectives",
     title: "Blog",
     subtitle:
@@ -720,9 +720,9 @@ const en = {
 
   /* ═══ CONTACT ═══ */
   contact: {
-    metaTitle: "Contact & Hire Me",
+    metaTitle: "Hire a Communications Professional | Contact Olga Emma Elume",
     metaDescription:
-      "Get in touch about consulting work, project collaborations, or full-time opportunities.",
+      "Contact Olga Emma Elume for professional communications consulting, project collaborations, media relations, and strategic communications support.",
     eyebrow: "Get in Touch",
     heading: "Let's Start a",
     headingLine2: "Conversation",
@@ -773,9 +773,9 @@ const en = {
 
   /* ═══ PRIVACY ═══ */
   privacy: {
-    metaTitle: "Privacy Policy",
+    metaTitle: "Privacy Policy | Olga Emma Elume",
     metaDescription:
-      "How I collect, use, and protect the information you share with me through this website.",
+      "Privacy policy for olgaemma.com — how we collect, use, and protect your information on this professional communications website.",
     title: "Privacy Policy",
     lastUpdated: "Last updated",
     sections: [
@@ -814,9 +814,9 @@ const en = {
 
   /* ═══ ACCESSIBILITY ═══ */
   accessibility: {
-    metaTitle: "Accessibility Statement",
+    metaTitle: "Accessibility Statement | Olga Emma Elume",
     metaDescription:
-      "My commitment to making this website easier to use and more accessible for everyone.",
+      "Our commitment to accessible professional communications. WCAG 2.1 AA compliance for an inclusive, user-friendly digital experience.",
     title: "Accessibility Statement",
     intro:
       "I am committed to ensuring that this website is accessible to everyone, including people with disabilities. I strive to meet the Web Content Accessibility Guidelines (WCAG) 2.1 at the AA level.",

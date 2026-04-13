@@ -40,11 +40,11 @@ const fr: typeof import("./en").default = {
 
   /* ═══ METADATA ═══ */
   meta: {
-    siteTitle: "Olga Emma Elume | Chargée de Communication & Professionnelle Humanitaire au Cameroun & en Afrique",
+    siteTitle: "Olga Emma Elume | Consultante en Communications Professionnelles — Afrique & Cameroun",
     siteDescription:
-      "Je suis Olga Emma Elume, professionnelle de la communication basée au Cameroun, avec plus de 6 ans d'expérience en relations médias, campagnes, plaidoyer et création de contenu en Afrique.",
+      "Olga Emma Elume, consultante en communications professionnelles avec plus de 6 ans d'expérience en communications stratégiques, relations médias, plaidoyer et création de contenu en Afrique.",
     ogDescription:
-      "J'aide des équipes et des organisations à mieux communiquer grâce à des campagnes solides, de bonnes relations médias et un travail de communication clair.",
+      "Services de communications professionnelles : stratégie de campagne, relations médias, communication de crise, création de contenu et plaidoyer. Engagez une professionnelle de la communication en Afrique.",
   },
 
   /* ═══ HOMEPAGE ═══ */
@@ -230,9 +230,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ ABOUT ═══ */
   about: {
-    metaTitle: "À propos d'Olga Emma Elume | Consultante en Communications & Relations Médias — Cameroun",
+    metaTitle: "À propos | Professionnelle de la Communication & Spécialiste Relations Médias",
     metaDescription:
-      "Je suis Olga Emma Elume. Je travaille dans la communication, les relations médias, le plaidoyer et la stratégie de contenu, depuis le Cameroun.",
+      "Découvrez Olga Emma Elume — professionnelle de la communication avec plus de 6 ans en communications professionnelles, relations médias et plaidoyer stratégique au Cameroun et en Afrique.",
     eyebrow: "À propos",
     heading:
       "Je suis Olga Emma Elume et je crée des communications claires, solides et utiles.",
@@ -404,9 +404,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ SERVICES ═══ */
   services: {
-    metaTitle: "Services de communications stratégiques | Relations médias, stratégie de campagne & communication de crise",
+    metaTitle: "Services de Communications Professionnelles | Stratégie, Médias & Crise",
     metaDescription:
-      "Je propose un accompagnement en stratégie de campagne, relations médias, création de contenu, communication de crise, plaidoyer et positionnement.",
+      "Engagez une professionnelle de la communication pour les communications stratégiques, relations médias, création de contenu, communication de crise et plaidoyer.",
     eyebrow: "Ce que j'offre",
     title: "Services",
     subtitle:
@@ -511,9 +511,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ CASE STUDIES (INDEX) ═══ */
   caseStudiesPage: {
-    metaTitle: "Études de cas en communications | Résultats de campagnes & portfolio relations médias",
+    metaTitle: "Études de cas en Communications Professionnelles | Résultats & Portfolio",
     metaDescription:
-      "Découvrez des études de cas réelles en communications montrant les résultats de campagnes, le travail en relations médias, l'impact du plaidoyer et la croissance d'audience dans les secteurs associatif, ONG et privé en Afrique.",
+      "Études de cas réelles en communications professionnelles : résultats de campagnes, portfolio relations médias, impact du plaidoyer et croissance d'audience en Afrique.",
     eyebrow: "Portfolio",
     title: "Études de cas",
     subtitle:
@@ -687,9 +687,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ PORTFOLIO PAGE ═══ */
   portfolioPage: {
-    metaTitle: "Portfolio | Travail humanitaire et impact social",
+    metaTitle: "Portfolio | Communications Professionnelles & Impact Social",
     metaDescription:
-      "Découvrez mon portfolio d'activités humanitaires incluant des ateliers de plaidoyer, des panels sur les droits numériques, des formations communautaires et des programmes de prévention des violences basées sur le genre.",
+      "Portfolio de communications professionnelles : ateliers de plaidoyer, panels sur les droits numériques, formations communautaires et programmes de communication humanitaire en Afrique.",
     eyebrow: "Mon travail",
     title: "Portfolio",
     subtitle:
@@ -702,9 +702,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ BLOG ═══ */
   blog: {
-    metaTitle: "Blog et réflexions sur la communication",
+    metaTitle: "Blog Communications Professionnelles | Réflexions & Stratégie",
     metaDescription:
-      "Mes réflexions sur la communication, les médias, le storytelling et le travail derrière des messages qui tiennent debout.",
+      "Réflexions d'experte sur les communications professionnelles, la stratégie de communication, les relations médias et les communications efficaces pour les organisations.",
     eyebrow: "Réflexions et perspectives",
     title: "Blog",
     subtitle:
@@ -720,9 +720,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ CONTACT ═══ */
   contact: {
-    metaTitle: "Contact et recrutement",
+    metaTitle: "Engagez une Professionnelle de la Communication | Contact",
     metaDescription:
-      "Écrivez-moi pour parler d'une mission, d'une collaboration ou d'une opportunité professionnelle.",
+      "Contactez Olga Emma Elume pour du consulting en communications professionnelles, collaborations, relations médias et accompagnement stratégique.",
     eyebrow: "Entrer en contact",
     heading: "Engageons la",
     headingLine2: "Conversation",
@@ -773,9 +773,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ PRIVACY ═══ */
   privacy: {
-    metaTitle: "Politique de confidentialité",
+    metaTitle: "Politique de confidentialité | Olga Emma Elume",
     metaDescription:
-      "La façon dont je collecte, utilise et protège les informations que vous partagez avec moi sur ce site.",
+      "Politique de confidentialité d'olgaemma.com — comment nous collectons, utilisons et protégeons vos informations sur ce site de communications professionnelles.",
     title: "Politique de confidentialité",
     lastUpdated: "Dernière mise à jour",
     sections: [
@@ -814,9 +814,9 @@ const fr: typeof import("./en").default = {
 
   /* ═══ ACCESSIBILITY ═══ */
   accessibility: {
-    metaTitle: "Déclaration d'accessibilité",
+    metaTitle: "Déclaration d'accessibilité | Olga Emma Elume",
     metaDescription:
-      "Mon engagement pour rendre ce site plus simple à utiliser et plus accessible à toutes et à tous.",
+      "Notre engagement pour des communications professionnelles accessibles. Conformité WCAG 2.1 AA pour une expérience numérique inclusive.",
     title: "Déclaration d'accessibilité",
     intro:
       "Je m'engage à ce que ce site web soit accessible à tous, y compris aux personnes en situation de handicap. Je m'efforce de respecter les Directives pour l'accessibilité des contenus Web (WCAG) 2.1 au niveau AA.",

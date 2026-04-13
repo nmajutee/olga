@@ -10,7 +10,28 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/", "/_next/", "/admin/"],
       },
+      {
+        userAgent: "GPTBot",
+        allow: ["/", "/llms.txt"],
+      },
+      {
+        userAgent: "ChatGPT-User",
+        allow: ["/", "/llms.txt"],
+      },
+      {
+        userAgent: "ClaudeBot",
+        allow: ["/", "/llms.txt"],
+      },
+      {
+        userAgent: "Google-Extended",
+        allow: "/",
+      },
+      {
+        userAgent: "PerplexityBot",
+        allow: ["/", "/llms.txt"],
+      },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

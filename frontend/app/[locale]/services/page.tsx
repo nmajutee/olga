@@ -43,14 +43,14 @@ export default async function ServicesPage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "Service",
     provider: { "@id": "https://olgaemma.com/#person" },
-    name: "Strategic Communications Services",
+    name: "Professional Communications Services",
     description:
-      "Campaign strategy, media relations, content creation, crisis communications, advocacy, and brand consulting.",
+      "Professional communications services: campaign strategy, media relations, content creation, crisis communications, advocacy, and brand consulting.",
     url: "https://olgaemma.com/services",
     areaServed: { "@type": "Place", name: "Africa" },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Communications Services",
+      name: "Professional Communications Services",
       itemListElement: t.items.map((s) => ({
         "@type": "Offer",
         itemOffered: {

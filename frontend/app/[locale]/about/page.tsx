@@ -28,9 +28,9 @@ export default async function AboutPage({ params }: PageProps) {
       "@type": "Person",
       "@id": "https://olgaemma.com/#person",
       name: "Olga Emma Elume",
-      jobTitle: "Communications Officer",
+      jobTitle: "Professional Communications Consultant",
       description:
-        "I work in communications and advocacy, with 6+ years of experience building campaigns, managing media relations, and supporting community-focused work across Africa.",
+        "Professional communications consultant with 6+ years of experience in strategic communications, media relations, advocacy, and content strategy across Africa.",
       url: "https://olgaemma.com/about",
       address: {
         "@type": "PostalAddress",
