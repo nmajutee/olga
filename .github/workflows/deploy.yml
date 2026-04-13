@@ -25,8 +25,7 @@ jobs:
 
       - run: npx opennextjs-cloudflare build
         env:
-          WORDPRESS_GRAPHQL_ENDPOINT: ${{ secrets.WORDPRESS_GRAPHQL_ENDPOINT }}
-          WORDPRESS_HOST_HEADER: ${{ secrets.WORDPRESS_HOST_HEADER }}
+          WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
 
       - uses: cloudflare/wrangler-action@v3
         with:

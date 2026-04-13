@@ -1,4 +1,4 @@
-import { postToWordPress } from "@/lib/wordpress-request";
+import { fetchWordPress } from "@/lib/wordpress-request";
 
 export type WpPostSummary = {
   slug: string;
@@ -12,165 +12,79 @@ export type WpPost = WpPostSummary & {
   content: string;
 };
 
-type GraphQLResponse<T> = {
-  data?: T;
-  errors?: Array<{ message: string }>;
-};
-
-type PostsQueryResult = {
-  posts: {
-    nodes: Array<{
-      slug: string;
-      title: string;
-      excerpt: string;
-      date: string;
-      author?: {
-        node?: {
-          name: string;
-        };
-      };
-    }>;
-  };
-};
-
-type PostQueryResult = {
-  post: {
-    slug: string;
-    title: string;
-    excerpt: string;
-    content: string;
-    date: string;
-    author?: {
-      node?: {
-        name: string;
-      };
-    };
-  } | null;
-};
-
-const endpoint = process.env.WORDPRESS_GRAPHQL_ENDPOINT;
-const wordpressUrl =
-  process.env.NEXT_PUBLIC_WORDPRESS_URL || "http://localhost:8080";
-const wordpressHostHeader = process.env.WORDPRESS_HOST_HEADER;
-
-function normalizePost(node: {
+/** Shape returned by WP REST API /wp/v2/posts with _embed */
+type WpRestPost = {
   slug: string;
-  title: string;
-  excerpt: string;
+  title: { rendered: string };
+  excerpt: { rendered: string };
+  content?: { rendered: string };
   date: string;
-  content?: string;
-  author?: {
-    node?: {
-      name: string;
-    };
+  _embedded?: {
+    author?: Array<{ name: string }>;
   };
-}): WpPost {
-  return {
-    slug: node.slug,
-    title: node.title,
-    excerpt: node.excerpt,
-    content: node.content ?? "",
-    date: node.date,
-    authorName: node.author?.node?.name ?? "Editorial team"
-  };
+};
+
+const wpUrl = process.env.WORDPRESS_API_URL;
+
+function restUrl(path: string) {
+  return `${wpUrl}/wp-json/wp/v2${path}`;
 }
 
-async function fetchGraphQL<T>(query: string, variables?: Record<string, unknown>) {
-  if (!endpoint) {
-    return null;
-  }
-
-  const response = await postToWordPress({
-    endpoint,
-    hostHeader: wordpressHostHeader,
-    body: JSON.stringify({ query, variables })
-  });
-
-  if (response.status < 200 || response.status >= 300) {
-    throw new Error(`WordPress GraphQL request failed with ${response.status}`);
-  }
-
-  const json = JSON.parse(response.body) as GraphQLResponse<T>;
-
-  if (json.errors?.length) {
-    throw new Error(json.errors.map((entry) => entry.message).join("; "));
-  }
-
-  return json.data ?? null;
+function normalizePost(raw: WpRestPost): WpPost {
+  return {
+    slug: raw.slug,
+    title: raw.title.rendered,
+    excerpt: raw.excerpt.rendered,
+    content: raw.content?.rendered ?? "",
+    date: raw.date,
+    authorName: raw._embedded?.author?.[0]?.name ?? "Editorial team",
+  };
 }
 
 export function getWordPressUrl() {
-  return wordpressUrl;
+  return wpUrl ?? "";
 }
 
 export function getWordPressStatus() {
   return {
-    configured: Boolean(endpoint),
-    endpoint: endpoint ?? "Set WORDPRESS_GRAPHQL_ENDPOINT to enable live data",
-    hostHeader: wordpressHostHeader ?? null
+    configured: Boolean(wpUrl),
+    endpoint: wpUrl
+      ? `${wpUrl}/wp-json/wp/v2`
+      : "Set WORDPRESS_API_URL to enable live data",
   };
 }
 
 export async function getPosts(limit = 6): Promise<WpPostSummary[]> {
+  if (!wpUrl) return [];
+
   try {
-    const data = await fetchGraphQL<PostsQueryResult>(
-      `
-        query GetPosts($limit: Int!) {
-          posts(first: $limit) {
-            nodes {
-              slug
-              title
-              excerpt
-              date
-              author {
-                node {
-                  name
-                }
-              }
-            }
-          }
-        }
-      `,
-      { limit }
-    );
+    const res = await fetchWordPress({
+      url: restUrl(`/posts?per_page=${limit}&_embed=author`),
+    });
 
-    if (!data) {
-      return [];
-    }
+    if (res.status < 200 || res.status >= 300) return [];
 
-    return data.posts.nodes.map((node) => normalizePost(node));
+    const posts = JSON.parse(res.body) as WpRestPost[];
+    return posts.map(normalizePost);
   } catch {
     return [];
   }
 }
 
 export async function getPostBySlug(slug: string): Promise<WpPost | null> {
+  if (!wpUrl) return null;
+
   try {
-    const data = await fetchGraphQL<PostQueryResult>(
-      `
-        query GetPostBySlug($slug: ID!) {
-          post(id: $slug, idType: SLUG) {
-            slug
-            title
-            excerpt
-            content
-            date
-            author {
-              node {
-                name
-              }
-            }
-          }
-        }
-      `,
-      { slug }
-    );
+    const res = await fetchWordPress({
+      url: restUrl(`/posts?slug=${encodeURIComponent(slug)}&_embed=author`),
+    });
 
-    if (!data?.post) {
-      return null;
-    }
+    if (res.status < 200 || res.status >= 300) return null;
 
-    return normalizePost(data.post);
+    const posts = JSON.parse(res.body) as WpRestPost[];
+    if (!posts.length) return null;
+
+    return normalizePost(posts[0]);
   } catch {
     return null;
   }
@@ -178,6 +92,6 @@ export async function getPostBySlug(slug: string): Promise<WpPost | null> {
 
 export function formatPublishDate(date: string) {
   return new Intl.DateTimeFormat("en", {
-    dateStyle: "medium"
+    dateStyle: "medium",
   }).format(new Date(date));
 }

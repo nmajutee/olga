@@ -1,37 +1,24 @@
-type GraphQLTransportOptions = {
-  endpoint: string;
-  hostHeader?: string;
-  body: string;
+type RestRequestOptions = {
+  url: string;
 };
 
-export type GraphQLTransportResponse = {
+export type RestResponse = {
   status: number;
   body: string;
 };
 
-export async function postToWordPress({
-  endpoint,
-  hostHeader,
-  body
-}: GraphQLTransportOptions): Promise<GraphQLTransportResponse> {
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-
-  if (hostHeader) {
-    headers["Host"] = hostHeader;
-  }
-
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers,
-    body,
+export async function fetchWordPress({
+  url,
+}: RestRequestOptions): Promise<RestResponse> {
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" },
+    next: { revalidate: 300 },
   });
 
-  const responseBody = await response.text();
+  const body = await response.text();
 
   return {
     status: response.status,
-    body: responseBody,
+    body,
   };
 }

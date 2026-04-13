@@ -1,91 +1,59 @@
 import { NextResponse } from "next/server";
-import { postToWordPress } from "@/lib/wordpress-request";
+import { fetchWordPress } from "@/lib/wordpress-request";
 
-const endpoint = process.env.WORDPRESS_GRAPHQL_ENDPOINT;
-const wordpressHostHeader = process.env.WORDPRESS_HOST_HEADER;
+const wpUrl = process.env.WORDPRESS_API_URL;
 
 export async function GET() {
-  if (!endpoint) {
+  if (!wpUrl) {
     return NextResponse.json(
       {
         ok: false,
         configured: false,
-        message: "WORDPRESS_GRAPHQL_ENDPOINT is not set."
+        message: "WORDPRESS_API_URL is not set.",
       },
       { status: 500 }
     );
   }
 
   try {
-    const response = await postToWordPress({
-      endpoint,
-      hostHeader: wordpressHostHeader,
-      body: JSON.stringify({
-        query: `
-          query WordPressStatus {
-            generalSettings {
-              title
-              url
-            }
-          }
-        `
-      })
+    const res = await fetchWordPress({
+      url: `${wpUrl}/wp-json`,
     });
 
-    if (response.status < 200 || response.status >= 300) {
+    if (res.status < 200 || res.status >= 300) {
       return NextResponse.json(
         {
           ok: false,
           configured: true,
-          endpoint,
-          hostHeader: wordpressHostHeader ?? null,
-          message: `WordPress responded with HTTP ${response.status}.`
+          endpoint: wpUrl,
+          message: `WordPress responded with HTTP ${res.status}.`,
         },
         { status: 502 }
       );
     }
 
-    const payload = JSON.parse(response.body) as {
-      data?: {
-        generalSettings?: {
-          title?: string;
-          url?: string;
-        };
-      };
-      errors?: Array<{ message: string }>;
+    const payload = JSON.parse(res.body) as {
+      name?: string;
+      url?: string;
     };
-
-    if (payload.errors?.length) {
-      return NextResponse.json(
-        {
-          ok: false,
-          configured: true,
-          endpoint,
-          hostHeader: wordpressHostHeader ?? null,
-          message: payload.errors.map((entry) => entry.message).join("; ")
-        },
-        { status: 502 }
-      );
-    }
 
     return NextResponse.json({
       ok: true,
       configured: true,
-      endpoint,
-      hostHeader: wordpressHostHeader ?? null,
-      siteTitle: payload.data?.generalSettings?.title ?? null,
-      siteUrl: payload.data?.generalSettings?.url ?? null
+      endpoint: wpUrl,
+      siteTitle: payload.name ?? null,
+      siteUrl: payload.url ?? null,
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown connection error";
+    const message =
+      error instanceof Error ? error.message : "Unknown connection error";
 
     return NextResponse.json(
       {
         ok: false,
         configured: true,
-        endpoint,
-        hostHeader: wordpressHostHeader ?? null,
-        message
+        endpoint: wpUrl,
+        message,
       },
       { status: 502 }
     );
