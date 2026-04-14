@@ -2,8 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { PostCard } from "@/components/post-card";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { formatPublishDate, getPosts } from "@/lib/wordpress";
+import { formatPublishDate, getPostsResult } from "@/lib/wordpress";
 import { getDictionary } from "@/i18n/get-dictionary";
+
+export const dynamic = "force-dynamic";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -23,7 +25,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
   const t = dict.blog;
   const prefix = `/${locale}`;
   const blogUrl = `https://olgaemma.com/${locale}/blog`;
-  const posts = await getPosts(12);
+  const { posts, error } = await getPostsResult(12);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -113,7 +115,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
             </>
           ) : (
             <div className="empty-state">
-              <p>{t.noArticles}</p>
+              <p>{error ? t.unavailableMessage : t.noArticles}</p>
             </div>
           )}
         </div>

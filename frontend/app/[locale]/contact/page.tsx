@@ -14,6 +14,21 @@ import {
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
+type ContactRequest = {
+  name: string;
+  email: string;
+  company: string;
+  inquiry: string;
+  message: string;
+  locale: string;
+  pageUrl: string;
+  website: string;
+};
+
+function getFieldValue(form: FormData, field: string) {
+  return form.get(field)?.toString().trim() ?? "";
+}
+
 export default function ContactPage() {
   const dict = useDictionary();
   const t = dict.contact;
@@ -27,9 +42,9 @@ export default function ContactPage() {
 
   function validate(form: FormData): Record<string, string> {
     const errs: Record<string, string> = {};
-    const name = form.get("name")?.toString().trim() ?? "";
-    const email = form.get("email")?.toString().trim() ?? "";
-    const message = form.get("message")?.toString().trim() ?? "";
+    const name = getFieldValue(form, "name");
+    const email = getFieldValue(form, "email");
+    const message = getFieldValue(form, "message");
     const consent = form.get("consent");
 
     if (!name) errs.name = t.errName;
@@ -44,50 +59,10 @@ export default function ContactPage() {
     return errs;
   }
 
-  function getInquiryLabel(value: string) {
-    switch (value) {
-      case "project":
-        return t.inquiryProject;
-      case "hire":
-        return t.inquiryHire;
-      case "consultation":
-        return t.inquiryConsultation;
-      case "collaboration":
-        return t.inquiryCollaboration;
-      case "other":
-        return t.inquiryOther;
-      default:
-        return value;
-    }
-  }
-
-  function buildMailtoUrl(form: FormData) {
-    const name = form.get("name")?.toString().trim() ?? "";
-    const email = form.get("email")?.toString().trim() ?? "";
-    const company = form.get("company")?.toString().trim() ?? "";
-    const inquiry = form.get("inquiry")?.toString().trim() ?? "";
-    const message = form.get("message")?.toString().trim() ?? "";
-    const inquiryLabel = getInquiryLabel(inquiry) || (locale === "fr" ? "Non précisé" : "Not specified");
-    const companyLabel = company || (locale === "fr" ? "Non précisé" : "Not specified");
-    const subject = `${locale === "fr" ? "Demande via le site" : "Website inquiry"} - ${name}`;
-    const body = [
-      `${t.nameLabel}: ${name}`,
-      `${t.emailAddressLabel}: ${email}`,
-      `${t.companyLabel}: ${companyLabel}`,
-      `${t.inquiryLabel}: ${inquiryLabel}`,
-      "",
-      `${t.messageLabel}:`,
-      message,
-      "",
-      `${locale === "fr" ? "Page" : "Page"}: ${contactPageUrl}`,
-    ].join("\n");
-
-    return `${CONTACT_MAILTO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const formElement = e.currentTarget;
+    const formData = new FormData(formElement);
 
     // Honeypot check
     if (formData.get("website")) return;
@@ -95,6 +70,7 @@ export default function ContactPage() {
     const validationErrors = validate(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setStatus("idle");
       return;
     }
 
@@ -102,11 +78,41 @@ export default function ContactPage() {
     setStatus("submitting");
 
     try {
-      window.location.assign(buildMailtoUrl(formData));
+      const payload: ContactRequest = {
+        name: getFieldValue(formData, "name"),
+        email: getFieldValue(formData, "email"),
+        company: getFieldValue(formData, "company"),
+        inquiry: getFieldValue(formData, "inquiry"),
+        message: getFieldValue(formData, "message"),
+        locale,
+        pageUrl: contactPageUrl,
+        website: getFieldValue(formData, "website"),
+      };
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = (await response.json().catch(() => null)) as
+        | { ok?: boolean }
+        | null;
+
+      if (!response.ok || !result?.ok) {
+        throw new Error("Contact submission failed");
+      }
+
+      formElement.reset();
       setStatus("success");
     } catch {
       setStatus("error");
     }
+  }
+
+  function handleResetForm() {
+    setErrors({});
+    setStatus("idle");
   }
 
   if (status === "success") {
@@ -133,9 +139,9 @@ export default function ContactPage() {
             <h1>{t.successTitle}</h1>
             <p>{t.successMessage}</p>
             <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-              <a href={CONTACT_MAILTO} className="btn btn-outline btn-lg">
-                {t.directEmailCta}
-              </a>
+              <button type="button" className="btn btn-outline btn-lg" onClick={handleResetForm}>
+                {t.resetFormCta}
+              </button>
               <Link href={prefix} className="btn btn-primary btn-lg">
                 {t.backToHome}
               </Link>
@@ -469,8 +475,10 @@ export default function ContactPage() {
                     type="submit"
                     className="btn btn-primary btn-lg"
                     style={{ width: "100%" }}
+                    disabled={status === "submitting"}
+                    aria-busy={status === "submitting"}
                   >
-                    {t.submitButton}
+                    {status === "submitting" ? t.submittingButton : t.submitButton}
                   </button>
 
                   {status === "error" && (

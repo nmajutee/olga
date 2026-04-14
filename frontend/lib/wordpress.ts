@@ -1,4 +1,7 @@
-import { fetchWordPress } from "@/lib/wordpress-request";
+import {
+  fetchWordPress,
+  inspectWordPressResponse,
+} from "@/lib/wordpress-request";
 
 export type WpPostSummary = {
   slug: string;
@@ -10,6 +13,12 @@ export type WpPostSummary = {
 
 export type WpPost = WpPostSummary & {
   content: string;
+};
+
+export type WpPostsResult = {
+  posts: WpPostSummary[];
+  error: string | null;
+  blocked: boolean;
 };
 
 /** Shape returned by WP REST API /wp/v2/posts with _embed */
@@ -54,21 +63,55 @@ export function getWordPressStatus() {
   };
 }
 
-export async function getPosts(limit = 6): Promise<WpPostSummary[]> {
-  if (!wpUrl) return [];
+function logWordPressError(scope: string, message: string) {
+  console.error(`[wordpress:${scope}] ${message}`);
+}
+
+export async function getPostsResult(limit = 6): Promise<WpPostsResult> {
+  if (!wpUrl) {
+    return {
+      posts: [],
+      error: "WORDPRESS_API_URL is not set.",
+      blocked: false,
+    };
+  }
 
   try {
     const res = await fetchWordPress({
       url: restUrl(`/posts?per_page=${limit}&_embed=author`),
     });
 
-    if (res.status < 200 || res.status >= 300) return [];
+    const responseIssue = inspectWordPressResponse(res);
+    if (responseIssue) {
+      logWordPressError("posts", responseIssue.message);
+      return {
+        posts: [],
+        error: responseIssue.message,
+        blocked: responseIssue.blocked,
+      };
+    }
 
     const posts = JSON.parse(res.body) as WpRestPost[];
-    return posts.map(normalizePost);
-  } catch {
-    return [];
+    return {
+      posts: posts.map(normalizePost),
+      error: null,
+      blocked: false,
+    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown WordPress connection error.";
+    logWordPressError("posts", message);
+    return {
+      posts: [],
+      error: message,
+      blocked: false,
+    };
   }
+}
+
+export async function getPosts(limit = 6): Promise<WpPostSummary[]> {
+  const { posts } = await getPostsResult(limit);
+  return posts;
 }
 
 export async function getPostBySlug(slug: string): Promise<WpPost | null> {
@@ -79,13 +122,20 @@ export async function getPostBySlug(slug: string): Promise<WpPost | null> {
       url: restUrl(`/posts?slug=${encodeURIComponent(slug)}&_embed=author`),
     });
 
-    if (res.status < 200 || res.status >= 300) return null;
+    const responseIssue = inspectWordPressResponse(res);
+    if (responseIssue) {
+      logWordPressError("post-by-slug", responseIssue.message);
+      return null;
+    }
 
     const posts = JSON.parse(res.body) as WpRestPost[];
     if (!posts.length) return null;
 
     return normalizePost(posts[0]);
-  } catch {
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown WordPress connection error.";
+    logWordPressError("post-by-slug", message);
     return null;
   }
 }

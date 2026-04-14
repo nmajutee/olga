@@ -15,7 +15,7 @@ const fr: typeof import("./en").default = {
     services: "Services",
     blog: "Blog",
     contact: "Contact",
-    letsTalk: "Discutons",
+    letsTalk: "Envoyer un message",
     openMenu: "Ouvrir le menu de navigation",
     closeMenu: "Fermer le menu de navigation",
     switchLang: "EN",
@@ -713,6 +713,8 @@ const fr: typeof import("./en").default = {
       "Des réflexions sur la communication, les médias et le storytelling, de l'idée jusqu'à l'exécution.",
     readMore: "Lire l'article →",
     noArticles: "Aucun article pour le moment. Revenez bientôt !",
+    unavailableMessage:
+      "Les articles sont temporairement indisponibles pendant la résolution de la connexion au blog.",
     author: "Auteur",
     shareArticle: "Partager cet article",
     backToBlog: "← Retour au blog",
@@ -739,7 +741,8 @@ const fr: typeof import("./en").default = {
     availabilityText: "Actuellement disponible pour de nouveaux projets et opportunités",
 
     formTitle: "Envoyer un message",
-    formSubtitle: "Remplissez le formulaire ci-dessous et votre application email ouvrira un brouillon prêt à envoyer.",
+    formSubtitle:
+      "Remplissez le formulaire ci-dessous et votre message me sera envoyé directement.",
     nameLabel: "Nom complet",
     namePlaceholder: "Votre nom complet",
     emailAddressLabel: "Adresse email",
@@ -757,15 +760,16 @@ const fr: typeof import("./en").default = {
     messagePlaceholder: "Parlez-moi de votre projet, de votre équipe ou de ce dont vous avez besoin.",
     messageHint: "Minimum 10 caractères",
     consentText: "J'accepte que mes données soient traitées conformément à la",
-    submitButton: "Ouvrir le brouillon email",
+    submitButton: "Envoyer le message",
     submittingButton: "Envoi en cours...",
-    submitErrorPrefix: "Je n'ai pas pu ouvrir votre application email. Veuillez m'écrire directement à",
+    submitErrorPrefix: "Je n'ai pas pu envoyer votre message pour le moment. Veuillez m'écrire directement à",
     submitErrorSuffix: ".",
     required: "*",
 
-    successTitle: "Brouillon prêt",
-    successMessage: "Votre application email devrait s'ouvrir avec un brouillon prêt à envoyer. Sinon, utilisez le bouton ci-dessous pour m'écrire directement.",
-    directEmailCta: "M'écrire directement",
+    successTitle: "Message envoyé",
+    successMessage:
+      "Merci pour votre message. Il a bien été envoyé et je vous répondrai sous 1 à 2 jours ouvrables.",
+    resetFormCta: "Envoyer un autre message",
     backToHome: "Retour à l'accueil",
 
     errName: "Veuillez entrer votre nom.",

@@ -3,7 +3,7 @@ import { PostCard } from "@/components/post-card";
 import { PortfolioGrid } from "@/components/portfolio-grid";
 import { StatsCounter } from "@/components/stats-counter";
 import { HeroAccordion } from "@/components/hero-accordion";
-import { formatPublishDate, getPosts } from "@/lib/wordpress";
+import { formatPublishDate, getPostsResult } from "@/lib/wordpress";
 import { getDictionary } from "@/i18n/get-dictionary";
 import {
   ChatBubbleLeftRightIcon,
@@ -13,6 +13,8 @@ import {
   AcademicCapIcon,
   MegaphoneIcon,
 } from "@heroicons/react/24/outline";
+
+export const dynamic = "force-dynamic";
 
 const icons = [
   { icon: ChatBubbleLeftRightIcon, iconClass: "expertise-icon-rose" },
@@ -31,7 +33,7 @@ export default async function HomePage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
   const t = dict.home;
-  const posts = await getPosts(3);
+  const { posts, error } = await getPostsResult(3);
   const prefix = `/${locale}`;
 
   return (
@@ -281,7 +283,7 @@ export default async function HomePage({
             </>
           ) : (
             <div className="empty-state">
-              <p>{dict.blog.noArticles}</p>
+              <p>{error ? dict.blog.unavailableMessage : dict.blog.noArticles}</p>
             </div>
           )}
         </div>

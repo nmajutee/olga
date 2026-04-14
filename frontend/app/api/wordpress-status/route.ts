@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { fetchWordPress } from "@/lib/wordpress-request";
+import {
+  fetchWordPress,
+  inspectWordPressResponse,
+} from "@/lib/wordpress-request";
 
 const wpUrl = process.env.WORDPRESS_API_URL;
 
@@ -16,33 +19,51 @@ export async function GET() {
   }
 
   try {
+    const checkedUrl = `${wpUrl}/wp-json/wp/v2/posts?per_page=1&_embed=author`;
     const res = await fetchWordPress({
-      url: `${wpUrl}/wp-json`,
+      url: checkedUrl,
+      revalidate: 0,
     });
 
-    if (res.status < 200 || res.status >= 300) {
+    const responseIssue = inspectWordPressResponse(res);
+    if (responseIssue) {
       return NextResponse.json(
         {
           ok: false,
           configured: true,
           endpoint: wpUrl,
-          message: `WordPress responded with HTTP ${res.status}.`,
+          checkedUrl,
+          blocked: responseIssue.blocked,
+          status: responseIssue.status,
+          contentType: responseIssue.contentType,
+          message: responseIssue.message,
         },
-        { status: 502 }
+        { status: responseIssue.blocked ? 503 : 502 }
       );
     }
 
-    const payload = JSON.parse(res.body) as {
-      name?: string;
-      url?: string;
-    };
+    const payload = JSON.parse(res.body) as Array<{
+      slug?: string;
+      date?: string;
+      title?: { rendered?: string };
+    }>;
+    const firstPost = payload[0];
 
     return NextResponse.json({
       ok: true,
       configured: true,
       endpoint: wpUrl,
-      siteTitle: payload.name ?? null,
-      siteUrl: payload.url ?? null,
+      checkedUrl,
+      status: res.status,
+      contentType: res.contentType,
+      postsVisible: payload.length > 0,
+      samplePost: firstPost
+        ? {
+            slug: firstPost.slug ?? null,
+            title: firstPost.title?.rendered ?? null,
+            date: firstPost.date ?? null,
+          }
+        : null,
     });
   } catch (error) {
     const message =

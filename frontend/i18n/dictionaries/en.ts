@@ -15,7 +15,7 @@ const en = {
     services: "Services",
     blog: "Blog",
     contact: "Contact",
-    letsTalk: "Let's Talk",
+    letsTalk: "Send Message",
     openMenu: "Open navigation menu",
     closeMenu: "Close navigation menu",
     switchLang: "FR",
@@ -713,6 +713,8 @@ const en = {
       "Thoughts on communication, media, and storytelling, from planning to execution.",
     readMore: "Read article →",
     noArticles: "No articles yet. Check back soon!",
+    unavailableMessage:
+      "Articles are temporarily unavailable while the blog connection is being fixed.",
     author: "Author",
     shareArticle: "Share this article",
     backToBlog: "← Back to Blog",
@@ -739,7 +741,8 @@ const en = {
     availabilityText: "Currently available for new projects & opportunities",
 
     formTitle: "Send a Message",
-    formSubtitle: "Fill out the form below and your email app will open a draft addressed to me.",
+    formSubtitle:
+      "Fill out the form below and your message will be delivered directly to me.",
     nameLabel: "Full Name",
     namePlaceholder: "Your full name",
     emailAddressLabel: "Email Address",
@@ -757,15 +760,16 @@ const en = {
     messagePlaceholder: "Tell me about your project, your team, or what you need help with.",
     messageHint: "Minimum 10 characters",
     consentText: "I agree that my data will be processed in accordance with the",
-    submitButton: "Open Email Draft",
+    submitButton: "Send Message",
     submittingButton: "Sending...",
-    submitErrorPrefix: "I couldn't open your email app. Please email me directly at",
+    submitErrorPrefix: "I couldn't send your message right now. Please email me directly at",
     submitErrorSuffix: ".",
     required: "*",
 
-    successTitle: "Email Draft Ready",
-    successMessage: "Your email app should open with a draft addressed to me. If it didn't, use the direct email button below.",
-    directEmailCta: "Email Directly",
+    successTitle: "Message Sent",
+    successMessage:
+      "Thanks for reaching out. Your message has been sent successfully, and I'll get back to you within 1 to 2 business days.",
+    resetFormCta: "Send Another Message",
     backToHome: "Back to Home",
 
     errName: "Please enter your name.",
