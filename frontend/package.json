@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "build:cloudflare": "npx opennextjs-cloudflare build && node scripts/patch-opennext-manifests.mjs",
-    "preview": "npm run build:cloudflare && npx wrangler dev",
-    "deploy": "npm run build:cloudflare && npx wrangler deploy",
+    "preview": "npm run build:cloudflare && npx opennextjs-cloudflare preview",
+    "deploy": "npm run build:cloudflare && npx opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "eslint ."
   },
