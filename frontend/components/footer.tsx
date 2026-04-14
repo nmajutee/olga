@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDictionary } from "@/i18n/dictionary-provider";
+import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/contact";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -60,7 +61,7 @@ export function Footer() {
           <div>
             <h3 className="footer-heading">{dict.footer.getInTouch}</h3>
             <div className="footer-links">
-              <a href="mailto:olgaanyutsa@gmail.com" className="footer-link">olgaanyutsa@gmail.com</a>
+              <a href={CONTACT_MAILTO} className="footer-link">{CONTACT_EMAIL}</a>
               <Link href={`${prefix}/contact`} className="footer-link">{dict.footer.contactForm}</Link>
               <Link href={`${prefix}/privacy`} className="footer-link">{dict.footer.privacyPolicy}</Link>
               <Link href={`${prefix}/accessibility`} className="footer-link">{dict.footer.accessibility}</Link>

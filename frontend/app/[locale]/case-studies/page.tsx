@@ -21,20 +21,21 @@ export default async function CaseStudiesPage({ params }: PageProps) {
   const t = dict.caseStudiesPage;
   const prefix = `/${locale}`;
   const tagClasses = ["tag-rose", "tag-sage", "tag-rose", "tag-sage"];
+  const caseStudiesUrl = `https://olgaemma.com/${locale}/case-studies`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: t.metaTitle,
     description: t.metaDescription,
-    url: "https://olgaemma.com/case-studies",
+    url: caseStudiesUrl,
     isPartOf: { "@id": "https://olgaemma.com/#website" },
     mainEntity: {
       "@type": "ItemList",
       itemListElement: t.items.map((cs, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `https://olgaemma.com/case-studies/${cs.slug}`,
+        url: `${caseStudiesUrl}/${cs.slug}`,
         name: cs.title,
       })),
     },

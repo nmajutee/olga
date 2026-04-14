@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -38,9 +39,9 @@ export default async function PrivacyPage({ params }: PageProps) {
               <p>
                 {section.heading === "Contact" ? (
                   <>
-                    {section.content.split("olgaanyutsa@gmail.com")[0]}
-                    <Link href={`${prefix}/contact`}>olgaanyutsa@gmail.com</Link>
-                    {section.content.split("olgaanyutsa@gmail.com")[1]}
+                    {section.content.split(CONTACT_EMAIL)[0]}
+                    <Link href={`${prefix}/contact`}>{CONTACT_EMAIL}</Link>
+                    {section.content.split(CONTACT_EMAIL)[1]}
                   </>
                 ) : (
                   section.content

@@ -41,6 +41,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const labels = dict.caseStudyDetail;
   const cs = labels.data[slug as keyof typeof labels.data];
   const prefix = `/${locale}`;
+  const caseStudyUrl = `https://olgaemma.com/${locale}/case-studies/${slug}`;
 
   if (!cs) notFound();
 
@@ -49,7 +50,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
     "@type": "CreativeWork",
     name: cs.title,
     description: cs.tldr,
-    url: `https://olgaemma.com/case-studies/${slug}`,
+    url: caseStudyUrl,
     author: {
       "@type": "Person",
       "@id": "https://olgaemma.com/#person",

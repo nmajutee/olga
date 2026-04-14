@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -20,10 +21,12 @@ export default async function AboutPage({ params }: PageProps) {
   const dict = await getDictionary(locale);
   const t = dict.about;
   const prefix = `/${locale}`;
+  const aboutUrl = `https://olgaemma.com/${locale}/about`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
+    url: aboutUrl,
     mainEntity: {
       "@type": "Person",
       "@id": "https://olgaemma.com/#person",
@@ -31,7 +34,7 @@ export default async function AboutPage({ params }: PageProps) {
       jobTitle: "Professional Communications Consultant",
       description:
         "Professional communications consultant with 6+ years of experience in strategic communications, media relations, advocacy, and content strategy across Africa.",
-      url: "https://olgaemma.com/about",
+      url: aboutUrl,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Buea",
@@ -64,10 +67,13 @@ export default async function AboutPage({ params }: PageProps) {
         <div className="container">
           <div className="about-intro">
             <div className="about-portrait">
-              <img
+              <Image
                 src="/images/about-portrait.jpg"
                 alt="Olga Emma Elume"
                 className="about-portrait-image"
+                width={800}
+                height={1000}
+                sizes="(min-width: 1024px) 32rem, (min-width: 768px) 40vw, 100vw"
               />
             </div>
 

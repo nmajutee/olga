@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 interface AccordionImage {
@@ -51,11 +52,13 @@ export function HeroAccordion() {
           role="button"
           aria-label={item.title}
         >
-          <img
+          <Image
             src={item.imageUrl}
             alt={item.title}
             className="hero-accordion-image"
-            loading="eager"
+            fill
+            sizes={index === activeIndex ? "(min-width: 1024px) 400px, (min-width: 768px) 360px, 300px" : "60px"}
+            priority={index === 0}
           />
           <div className="hero-accordion-overlay" />
           <span className="hero-accordion-label">{item.title}</span>

@@ -12,6 +12,7 @@ export async function generateMetadata({
   return {
     title: dict.portfolioPage.metaTitle,
     description: dict.portfolioPage.metaDescription,
+    alternates: { canonical: `/${locale}/portfolio` },
   };
 }
 

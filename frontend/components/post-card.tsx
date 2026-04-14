@@ -22,7 +22,7 @@ export function PostCard({ post, locale = "en", readMoreLabel = "Read article" }
       </Link>
       <div className="blog-card-body">
         <div className="blog-card-meta">
-          <time dateTime={post.date}>{formatPublishDate(post.date)}</time>
+          <time dateTime={post.date}>{formatPublishDate(post.date, locale)}</time>
           <span aria-hidden="true">·</span>
           <span>{post.authorName}</span>
         </div>

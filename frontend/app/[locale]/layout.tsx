@@ -1,29 +1,15 @@
 import type { Metadata } from "next";
-import { Sora, Nunito_Sans } from "next/font/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { DictionaryProvider } from "@/i18n/dictionary-provider";
 import { getDictionary } from "@/i18n/get-dictionary";
-import type { Locale } from "@/i18n/config";
 import { i18n } from "@/i18n/config";
-
-const display = Sora({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const body = Nunito_Sans({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ locale }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -205,30 +191,29 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} className={`${display.variable} ${body.variable}`}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-      </head>
-      <body>
-        <DictionaryProvider dictionary={dict}>
-          <a href="#main-content" className="skip-link">
-            {dict.skipToContent}
-          </a>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
 
-          <Navigation />
+      <DictionaryProvider dictionary={dict}>
+        <a href="#main-content" className="skip-link">
+          {dict.skipToContent}
+        </a>
 
-          <main id="main-content">{children}</main>
+        <Navigation />
 
-          <Footer />
-        </DictionaryProvider>
-      </body>
-    </html>
+        <main id="main-content" lang={locale}>
+          {children}
+        </main>
+
+        <Footer />
+      </DictionaryProvider>
+    </>
   );
 }

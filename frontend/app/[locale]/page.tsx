@@ -261,7 +261,7 @@ export default async function HomePage({
                       <div className="blog-featured-meta-text">
                         <strong>{posts[0].authorName}</strong>
                         <br />
-                        {formatPublishDate(posts[0].date)}
+                        {formatPublishDate(posts[0].date, locale)}
                       </div>
                     </div>
                     <span className="blog-featured-read">

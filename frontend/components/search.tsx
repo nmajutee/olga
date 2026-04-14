@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useDictionary } from "@/i18n/dictionary-provider";
 import {
@@ -19,7 +19,6 @@ type SearchResult = {
 export function Search() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -96,39 +95,35 @@ export function Search() {
     return pages;
   }, [dict, prefix]);
 
-  // Search logic
-  useEffect(() => {
+  const results = useMemo(() => {
     if (!query.trim()) {
-      setResults([]);
-      setActiveIndex(-1);
-      return;
+      return [];
     }
 
     const q = query.toLowerCase();
     const staticPages = getStaticPages();
-    const matched = staticPages.filter(
+    return staticPages.filter(
       (page) =>
         page.title.toLowerCase().includes(q) ||
         page.description.toLowerCase().includes(q) ||
         page.category.toLowerCase().includes(q)
-    );
-
-    setResults(matched.slice(0, 8));
-    setActiveIndex(-1);
+    ).slice(0, 8);
   }, [query, getStaticPages]);
+
+  const highlightedIndex =
+    activeIndex >= 0 && activeIndex < results.length ? activeIndex : -1;
 
   // Open/close
   const openSearch = useCallback(() => {
     setOpen(true);
     setQuery("");
-    setResults([]);
+    setActiveIndex(-1);
     setTimeout(() => inputRef.current?.focus(), 50);
   }, []);
 
   const closeSearch = useCallback(() => {
     setOpen(false);
     setQuery("");
-    setResults([]);
     setActiveIndex(-1);
   }, []);
 
@@ -161,13 +156,13 @@ export function Search() {
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setActiveIndex((i) => Math.min(i + 1, results.length - 1));
+      setActiveIndex((index) => Math.min(index + 1, results.length - 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setActiveIndex((i) => Math.max(i - 1, -1));
-    } else if (e.key === "Enter" && activeIndex >= 0 && results[activeIndex]) {
+      setActiveIndex((index) => Math.max(index - 1, -1));
+    } else if (e.key === "Enter" && highlightedIndex >= 0 && results[highlightedIndex]) {
       e.preventDefault();
-      goToResult(results[activeIndex]);
+      goToResult(results[highlightedIndex]);
     }
   };
 
@@ -228,7 +223,10 @@ export function Search() {
                 className="search-input"
                 placeholder={placeholderText}
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setActiveIndex(-1);
+                }}
                 onKeyDown={handleInputKeyDown}
                 autoComplete="off"
                 autoCorrect="off"
@@ -266,10 +264,10 @@ export function Search() {
                     <li
                       key={`${result.href}-${i}`}
                       role="option"
-                      aria-selected={i === activeIndex}
+                      aria-selected={i === highlightedIndex}
                     >
                       <button
-                        className={`search-result-item${i === activeIndex ? " search-result-active" : ""}`}
+                        className={`search-result-item${i === highlightedIndex ? " search-result-active" : ""}`}
                         onClick={() => goToResult(result)}
                         type="button"
                       >

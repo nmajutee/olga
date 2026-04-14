@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -39,9 +40,9 @@ export default async function AccessibilityPage({ params }: PageProps) {
 
           <h2>{t.feedbackTitle}</h2>
           <p>
-            {t.feedbackText.split("olgaanyutsa@gmail.com")[0]}
-            <Link href={`${prefix}/contact`}>olgaanyutsa@gmail.com</Link>
-            {t.feedbackText.split("olgaanyutsa@gmail.com")[1]}
+            {t.feedbackText.split(CONTACT_EMAIL)[0]}
+            <Link href={`${prefix}/contact`}>{CONTACT_EMAIL}</Link>
+            {t.feedbackText.split(CONTACT_EMAIL)[1]}
           </p>
         </div>
       </article>

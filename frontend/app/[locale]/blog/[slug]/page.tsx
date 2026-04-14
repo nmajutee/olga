@@ -51,9 +51,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const authorInitial = post.authorName.charAt(0).toUpperCase();
+  const postUrl = `https://olgaemma.com/${locale}/blog/${slug}`;
+  const excerptText = post.excerpt.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
 
   // Auto-translate content for non-English locales
   const postTitle = locale !== "en" ? await translateText(post.title, locale) : post.title;
+  const postDescription = locale !== "en"
+    ? await translateText(excerptText, locale)
+    : excerptText;
   const postContent = locale !== "en"
     ? await translateHtml(post.content || post.excerpt, locale)
     : (post.content || post.excerpt);
@@ -62,8 +67,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: postTitle,
-    description: post.excerpt.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160),
-    url: `https://olgaemma.com/blog/${slug}`,
+    description: postDescription,
+    url: postUrl,
     datePublished: post.date,
     inLanguage: locale,
     author: {
@@ -73,7 +78,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     publisher: { "@id": "https://olgaemma.com/#person" },
     isPartOf: { "@id": "https://olgaemma.com/#website" },
-    mainEntityOfPage: `https://olgaemma.com/blog/${slug}`,
+    mainEntityOfPage: postUrl,
   };
 
   return (
@@ -88,7 +93,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container">
           <header className="single-post-header">
             <div className="single-post-meta">
-              <time dateTime={post.date}>{formatPublishDate(post.date)}</time>
+              <time dateTime={post.date}>{formatPublishDate(post.date, locale)}</time>
             </div>
             <h1>{postTitle}</h1>
             <div className="single-post-author">
@@ -116,7 +121,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="single-post-share">
               <span>{t.shareArticle}:</span>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://olgaemma.com/blog/${slug}`)}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
                 className="single-post-share-link"
                 aria-label="Share on LinkedIn"
                 target="_blank"
@@ -125,7 +130,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </a>
               <a
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://olgaemma.com/blog/${slug}`)}&text=${encodeURIComponent(postTitle)}`}
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(postTitle)}`}
                 className="single-post-share-link"
                 aria-label="Share on X"
                 target="_blank"

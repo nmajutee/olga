@@ -1,3 +1,5 @@
+import { CONTACT_EMAIL } from "@/lib/contact";
+
 const en = {
   /* ═══ COMMON ═══ */
   lang: "en",
@@ -737,7 +739,7 @@ const en = {
     availabilityText: "Currently available for new projects & opportunities",
 
     formTitle: "Send a Message",
-    formSubtitle: "Fill out the form below and I'll get back to you as soon as possible.",
+    formSubtitle: "Fill out the form below and your email app will open a draft addressed to me.",
     nameLabel: "Full Name",
     namePlaceholder: "Your full name",
     emailAddressLabel: "Email Address",
@@ -755,12 +757,15 @@ const en = {
     messagePlaceholder: "Tell me about your project, your team, or what you need help with.",
     messageHint: "Minimum 10 characters",
     consentText: "I agree that my data will be processed in accordance with the",
-    submitButton: "Send Message",
+    submitButton: "Open Email Draft",
     submittingButton: "Sending...",
+    submitErrorPrefix: "I couldn't open your email app. Please email me directly at",
+    submitErrorSuffix: ".",
     required: "*",
 
-    successTitle: "Message Sent!",
-    successMessage: "Thank you for reaching out. I'll review your message and get back to you within 1 to 2 business days.",
+    successTitle: "Email Draft Ready",
+    successMessage: "Your email app should open with a draft addressed to me. If it didn't, use the direct email button below.",
+    directEmailCta: "Email Directly",
     backToHome: "Back to Home",
 
     errName: "Please enter your name.",
@@ -797,7 +802,7 @@ const en = {
       {
         heading: "Your Rights",
         content:
-          "You can request access to, correction of, or deletion of your personal data at any time. To do that, please contact me at olgaanyutsa@gmail.com.",
+          `You can request access to, correction of, or deletion of your personal data at any time. To do that, please contact me at ${CONTACT_EMAIL}.`,
       },
       {
         heading: "Changes to This Policy",
@@ -807,7 +812,7 @@ const en = {
       {
         heading: "Contact",
         content:
-          "If you have any questions about this privacy policy, please contact me at olgaanyutsa@gmail.com.",
+          `If you have any questions about this privacy policy, please contact me at ${CONTACT_EMAIL}.`,
       },
     ],
   },
@@ -832,7 +837,7 @@ const en = {
     ],
     feedbackTitle: "Feedback",
     feedbackText:
-      "If you encounter any accessibility barriers or have suggestions for improvement, please contact me at olgaanyutsa@gmail.com. I take accessibility feedback seriously and will work to address any issues promptly.",
+      `If you encounter any accessibility barriers or have suggestions for improvement, please contact me at ${CONTACT_EMAIL}. I take accessibility feedback seriously and will work to address any issues promptly.`,
   },
 
   /* ═══ 404 ═══ */

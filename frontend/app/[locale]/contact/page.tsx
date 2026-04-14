@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { useDictionary } from "@/i18n/dictionary-provider";
+import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/contact";
 import {
   EnvelopeIcon,
   MapPinIcon,
@@ -19,6 +20,7 @@ export default function ContactPage() {
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "en";
   const prefix = `/${locale}`;
+  const contactPageUrl = `https://olgaemma.com/${locale}/contact`;
 
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -42,7 +44,48 @@ export default function ContactPage() {
     return errs;
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function getInquiryLabel(value: string) {
+    switch (value) {
+      case "project":
+        return t.inquiryProject;
+      case "hire":
+        return t.inquiryHire;
+      case "consultation":
+        return t.inquiryConsultation;
+      case "collaboration":
+        return t.inquiryCollaboration;
+      case "other":
+        return t.inquiryOther;
+      default:
+        return value;
+    }
+  }
+
+  function buildMailtoUrl(form: FormData) {
+    const name = form.get("name")?.toString().trim() ?? "";
+    const email = form.get("email")?.toString().trim() ?? "";
+    const company = form.get("company")?.toString().trim() ?? "";
+    const inquiry = form.get("inquiry")?.toString().trim() ?? "";
+    const message = form.get("message")?.toString().trim() ?? "";
+    const inquiryLabel = getInquiryLabel(inquiry) || (locale === "fr" ? "Non précisé" : "Not specified");
+    const companyLabel = company || (locale === "fr" ? "Non précisé" : "Not specified");
+    const subject = `${locale === "fr" ? "Demande via le site" : "Website inquiry"} - ${name}`;
+    const body = [
+      `${t.nameLabel}: ${name}`,
+      `${t.emailAddressLabel}: ${email}`,
+      `${t.companyLabel}: ${companyLabel}`,
+      `${t.inquiryLabel}: ${inquiryLabel}`,
+      "",
+      `${t.messageLabel}:`,
+      message,
+      "",
+      `${locale === "fr" ? "Page" : "Page"}: ${contactPageUrl}`,
+    ].join("\n");
+
+    return `${CONTACT_MAILTO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
@@ -59,7 +102,7 @@ export default function ContactPage() {
     setStatus("submitting");
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      window.location.assign(buildMailtoUrl(formData));
       setStatus("success");
     } catch {
       setStatus("error");
@@ -89,9 +132,14 @@ export default function ContactPage() {
             </div>
             <h1>{t.successTitle}</h1>
             <p>{t.successMessage}</p>
-            <Link href={prefix} className="btn btn-primary btn-lg">
-              {t.backToHome}
-            </Link>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <a href={CONTACT_MAILTO} className="btn btn-outline btn-lg">
+                {t.directEmailCta}
+              </a>
+              <Link href={prefix} className="btn btn-primary btn-lg">
+                {t.backToHome}
+              </Link>
+            </div>
           </div>
         </section>
       </>
@@ -103,12 +151,12 @@ export default function ContactPage() {
     "@type": "ContactPage",
     name: "Contact Olga Emma Elume",
     description: t.metaDescription,
-    url: "https://olgaemma.com/contact",
+    url: contactPageUrl,
     mainEntity: {
       "@type": "Person",
       "@id": "https://olgaemma.com/#person",
       name: "Olga Emma Elume",
-      email: "hello@olgaemma.com",
+      email: CONTACT_EMAIL,
       address: {
         "@type": "PostalAddress",
         addressCountry: "CM",
@@ -149,8 +197,8 @@ export default function ContactPage() {
                   <div>
                     <div className="contact-info-label">{t.emailLabel}</div>
                     <div className="contact-info-value">
-                      <a href="mailto:olgaanyutsa@gmail.com">
-                        olgaanyutsa@gmail.com
+                      <a href={CONTACT_MAILTO}>
+                        {CONTACT_EMAIL}
                       </a>
                     </div>
                   </div>
@@ -420,10 +468,9 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     className="btn btn-primary btn-lg"
-                    disabled={status === "submitting"}
                     style={{ width: "100%" }}
                   >
-                    {status === "submitting" ? t.submittingButton : t.submitButton}
+                    {t.submitButton}
                   </button>
 
                   {status === "error" && (
@@ -432,15 +479,14 @@ export default function ContactPage() {
                       role="alert"
                       style={{ textAlign: "center" }}
                     >
-                      Something went wrong. Please try again or email me
-                      directly at{" "}
+                      {t.submitErrorPrefix}{" "}
                       <a
-                        href="mailto:olgaanyutsa@gmail.com"
+                        href={CONTACT_MAILTO}
                         style={{ color: "var(--color-rose)", textDecoration: "underline" }}
                       >
-                        olgaanyutsa@gmail.com
+                        {CONTACT_EMAIL}
                       </a>
-                      .
+                      {t.submitErrorSuffix}
                     </p>
                   )}
                 </div>

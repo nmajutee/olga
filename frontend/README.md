@@ -12,6 +12,11 @@ Required variables:
 - `NEXT_PUBLIC_WORDPRESS_URL`: public WordPress URL, useful for linking or previews.
 - `NEXT_PUBLIC_SITE_URL`: public URL of the Next.js app.
 
+Contact form behavior:
+
+- The website contact form validates input locally and opens the visitor's default email app with a draft addressed to `contact@olgaemma.com`.
+- No outbound email provider or extra contact-form environment variables are required.
+
 ## Commands
 
 ```bash

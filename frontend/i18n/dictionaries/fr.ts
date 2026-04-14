@@ -1,3 +1,5 @@
+import { CONTACT_EMAIL } from "@/lib/contact";
+
 const fr: typeof import("./en").default = {
   /* ═══ COMMON ═══ */
   lang: "fr",
@@ -737,7 +739,7 @@ const fr: typeof import("./en").default = {
     availabilityText: "Actuellement disponible pour de nouveaux projets et opportunités",
 
     formTitle: "Envoyer un message",
-    formSubtitle: "Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais.",
+    formSubtitle: "Remplissez le formulaire ci-dessous et votre application email ouvrira un brouillon prêt à envoyer.",
     nameLabel: "Nom complet",
     namePlaceholder: "Votre nom complet",
     emailAddressLabel: "Adresse email",
@@ -755,12 +757,15 @@ const fr: typeof import("./en").default = {
     messagePlaceholder: "Parlez-moi de votre projet, de votre équipe ou de ce dont vous avez besoin.",
     messageHint: "Minimum 10 caractères",
     consentText: "J'accepte que mes données soient traitées conformément à la",
-    submitButton: "Envoyer le message",
+    submitButton: "Ouvrir le brouillon email",
     submittingButton: "Envoi en cours...",
+    submitErrorPrefix: "Je n'ai pas pu ouvrir votre application email. Veuillez m'écrire directement à",
+    submitErrorSuffix: ".",
     required: "*",
 
-    successTitle: "Message envoyé !",
-    successMessage: "Merci de m'avoir contactée. Je vais examiner votre message et vous répondre sous 1 à 2 jours ouvrables.",
+    successTitle: "Brouillon prêt",
+    successMessage: "Votre application email devrait s'ouvrir avec un brouillon prêt à envoyer. Sinon, utilisez le bouton ci-dessous pour m'écrire directement.",
+    directEmailCta: "M'écrire directement",
     backToHome: "Retour à l'accueil",
 
     errName: "Veuillez entrer votre nom.",
@@ -797,7 +802,7 @@ const fr: typeof import("./en").default = {
       {
         heading: "Vos droits",
         content:
-          "Vous pouvez demander l'accès, la correction ou la suppression de vos données personnelles à tout moment. Pour cela, écrivez-moi à olgaanyutsa@gmail.com.",
+          `Vous pouvez demander l'accès, la correction ou la suppression de vos données personnelles à tout moment. Pour cela, écrivez-moi à ${CONTACT_EMAIL}.`,
       },
       {
         heading: "Modifications de cette politique",
@@ -807,7 +812,7 @@ const fr: typeof import("./en").default = {
       {
         heading: "Contact",
         content:
-          "Si vous avez des questions sur cette politique de confidentialité, vous pouvez m'écrire à olgaanyutsa@gmail.com.",
+          `Si vous avez des questions sur cette politique de confidentialité, vous pouvez m'écrire à ${CONTACT_EMAIL}.`,
       },
     ],
   },
@@ -832,7 +837,7 @@ const fr: typeof import("./en").default = {
     ],
     feedbackTitle: "Retours",
     feedbackText:
-      "Si vous rencontrez des obstacles d'accessibilité ou avez des suggestions d'amélioration, veuillez me contacter à olgaanyutsa@gmail.com. Je prends les retours sur l'accessibilité au sérieux et m'efforcerai de résoudre tout problème rapidement.",
+      `Si vous rencontrez des obstacles d'accessibilité ou avez des suggestions d'amélioration, veuillez me contacter à ${CONTACT_EMAIL}. Je prends les retours sur l'accessibilité au sérieux et m'efforcerai de résoudre tout problème rapidement.`,
   },
 
   /* ═══ 404 ═══ */

@@ -90,8 +90,10 @@ export async function getPostBySlug(slug: string): Promise<WpPost | null> {
   }
 }
 
-export function formatPublishDate(date: string) {
-  return new Intl.DateTimeFormat("en", {
+export function formatPublishDate(date: string, locale = "en") {
+  const dateLocale = locale === "fr" ? "fr-FR" : "en-US";
+
+  return new Intl.DateTimeFormat(dateLocale, {
     dateStyle: "medium",
   }).format(new Date(date));
 }

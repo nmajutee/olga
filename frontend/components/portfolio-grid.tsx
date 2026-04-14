@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useMemo } from "react";
 import { PortfolioModal } from "./portfolio-modal";
 
@@ -60,11 +61,12 @@ export function PortfolioGrid({ items, labels }: PortfolioGridProps) {
           >
             <div className="portfolio-card-visual">
               {item.image ? (
-                <img
+                <Image
                   src={item.image}
                   alt={item.title}
                   className="portfolio-card-image"
-                  loading="lazy"
+                  fill
+                  sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 100vw"
                 />
               ) : (
                 <span className="portfolio-card-visual-text" aria-hidden="true">

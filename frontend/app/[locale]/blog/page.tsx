@@ -22,6 +22,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
   const dict = await getDictionary(locale);
   const t = dict.blog;
   const prefix = `/${locale}`;
+  const blogUrl = `https://olgaemma.com/${locale}/blog`;
   const posts = await getPosts(12);
 
   const jsonLd = {
@@ -29,14 +30,14 @@ export default async function BlogIndexPage({ params }: PageProps) {
     "@type": "CollectionPage",
     name: t.metaTitle,
     description: t.metaDescription,
-    url: "https://olgaemma.com/blog",
+    url: blogUrl,
     isPartOf: { "@id": "https://olgaemma.com/#website" },
     mainEntity: {
       "@type": "ItemList",
       itemListElement: posts.map((post, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `https://olgaemma.com/blog/${post.slug}`,
+        url: `${blogUrl}/${post.slug}`,
         name: post.title,
       })),
     },
@@ -92,7 +93,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
                       <div className="blog-featured-meta-text">
                         <strong>{posts[0].authorName}</strong>
                         <br />
-                        {formatPublishDate(posts[0].date)}
+                        {formatPublishDate(posts[0].date, locale)}
                       </div>
                     </div>
                     <span className="blog-featured-read">

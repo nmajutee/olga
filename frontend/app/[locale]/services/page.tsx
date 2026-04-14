@@ -38,6 +38,7 @@ export default async function ServicesPage({ params }: PageProps) {
   const dict = await getDictionary(locale);
   const t = dict.services;
   const prefix = `/${locale}`;
+  const servicesUrl = `https://olgaemma.com/${locale}/services`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -46,7 +47,7 @@ export default async function ServicesPage({ params }: PageProps) {
     name: "Professional Communications Services",
     description:
       "Professional communications services: campaign strategy, media relations, content creation, crisis communications, advocacy, and brand consulting.",
-    url: "https://olgaemma.com/services",
+    url: servicesUrl,
     areaServed: { "@type": "Place", name: "Africa" },
     hasOfferCatalog: {
       "@type": "OfferCatalog",

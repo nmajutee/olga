@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useCallback } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -62,10 +63,13 @@ export function PortfolioModal({ item, labels, onClose }: PortfolioModalProps) {
 
         <div className="portfolio-modal-visual">
           {item.image ? (
-            <img
+            <Image
               src={item.image}
               alt={item.title}
               className="portfolio-modal-image"
+              width={1600}
+              height={900}
+              sizes="(min-width: 768px) 640px, 100vw"
             />
           ) : (
             <div className="portfolio-modal-visual-inner">
