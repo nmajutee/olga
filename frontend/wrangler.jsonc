@@ -40,7 +40,7 @@
   // address, so it belongs here rather than only in .env.local.
   "vars": {
     "NEXT_PUBLIC_SITE_URL": "https://olgaemma.com",
-    "RESEND_FROM_EMAIL": "noreply@olgaemma.com",
+    "RESEND_FROM_EMAIL": "contact@olgaemma.com",
     "RESEND_TO_EMAIL": "contact@olgaemma.com"
   }
   // Secrets (set with `npx wrangler secret put <NAME>`), never in this file:
