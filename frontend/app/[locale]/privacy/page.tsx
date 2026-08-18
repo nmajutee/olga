@@ -26,7 +26,7 @@ export default async function PrivacyPage({ params }: PageProps) {
     <>
       <Breadcrumbs items={[{ label: dict.nav.home, href: prefix }, { label: t.title }]} />
 
-      <article className="section">
+      <article className="section reveal">
         <div className="container prose">
           <h1>{t.title}</h1>
           <p>

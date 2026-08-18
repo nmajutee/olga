@@ -1,25 +1,39 @@
 {
-  "name": "headless-wordpress-frontend",
+  "name": "olga-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cloudflare": "npx opennextjs-cloudflare build && node scripts/patch-opennext-manifests.mjs",
+    "build:cloudflare": "NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://olgaemma.com} npx opennextjs-cloudflare build && node scripts/patch-opennext-manifests.mjs",
     "preview": "npm run build:cloudflare && npx opennextjs-cloudflare preview",
     "deploy": "npm run build:cloudflare && npx opennextjs-cloudflare deploy",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "db:schema": "wrangler d1 execute olga-db --file=db/schema.sql --remote",
+    "db:seed": "wrangler d1 execute olga-db --file=db/seed.sql --remote",
+    "db:schema:local": "wrangler d1 execute olga-db --file=db/schema.sql --local",
+    "db:seed:local": "wrangler d1 execute olga-db --file=db/seed.sql --local",
+    "import:wordpress": "node scripts/import-wordpress.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.117.1",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/postcss": "^4.2.2",
+    "@tiptap/extension-image": "^3.30.1",
+    "@tiptap/extension-link": "^3.30.1",
+    "@tiptap/extension-placeholder": "^3.30.1",
+    "@tiptap/pm": "^3.30.1",
+    "@tiptap/react": "^3.30.1",
+    "@tiptap/starter-kit": "^3.30.1",
     "framer-motion": "^12.38.0",
     "next": "^16.2.3",
     "postcss": "^8.5.9",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "^1.19.1",
@@ -29,6 +43,6 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.3",
     "typescript": "5.8.2",
-    "wrangler": "^4.82.2"
+    "wrangler": "^4.124.0"
   }
 }

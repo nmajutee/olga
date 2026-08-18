@@ -3,7 +3,8 @@ import { PostCard } from "@/components/post-card";
 import { PortfolioGrid } from "@/components/portfolio-grid";
 import { StatsCounter } from "@/components/stats-counter";
 import { HeroAccordion } from "@/components/hero-accordion";
-import { formatPublishDate, getPostsResult } from "@/lib/wordpress";
+import { formatPublishDate, getPostsResult } from "@/lib/posts";
+import { getSettings } from "@/lib/settings";
 import { getDictionary } from "@/i18n/get-dictionary";
 import {
   ChatBubbleLeftRightIcon,
@@ -33,7 +34,7 @@ export default async function HomePage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
   const t = dict.home;
-  const { posts, error } = await getPostsResult(3);
+  const [{ posts, error }, settings] = await Promise.all([getPostsResult(3), getSettings()]);
   const prefix = `/${locale}`;
 
   return (
@@ -45,22 +46,31 @@ export default async function HomePage({
             <div>
               <div className="hero-status">
                 <span className="hero-status-dot" aria-hidden="true" />
-                {t.heroStatus}
+                {settings.hero_eyebrow || t.heroStatus}
               </div>
 
               <p className="hero-greeting">{t.heroGreeting}</p>
 
               <h1 id="hero-heading" className="hero-title">
-                {t.heroLine1}<br />
-                {t.heroLine2}{" "}
-                <span className="hero-title-accent">{t.heroLine3}</span>
+                {settings.hero_title ? (
+                  settings.hero_title
+                ) : (
+                  <>
+                    {t.heroLine1}<br />
+                    {t.heroLine2}{" "}
+                    <span className="hero-title-accent">{t.heroLine3}</span>
+                  </>
+                )}
               </h1>
 
-              <p className="hero-desc">{t.heroDesc}</p>
+              <p className="hero-desc">{settings.hero_subtitle || t.heroDesc}</p>
 
               <div className="hero-actions">
-                <Link href={`${prefix}/contact`} className="btn btn-hero-primary btn-lg">
-                  {t.ctaStart}
+                <Link
+                  href={`${prefix}${settings.hero_cta_href || "/contact"}`}
+                  className="btn btn-hero-primary btn-lg"
+                >
+                  {settings.hero_cta_label || t.ctaStart}
                   <span className="btn-arrow" aria-hidden="true">→</span>
                 </Link>
                 <Link href={`${prefix}/portfolio`} className="btn btn-hero-ghost btn-lg">
@@ -86,7 +96,7 @@ export default async function HomePage({
       </section>
 
       {/* ══ OUR STORY / MISSION / VISION ══ */}
-      <section className="section" style={{ background: "var(--color-cream-dark)" }} aria-labelledby="mission-heading">
+      <section className="section reveal" style={{ background: "var(--color-cream-dark)" }} aria-labelledby="mission-heading">
         <div className="container">
           <h2 id="mission-heading" className="section-title">
             {t.missionTitle}
@@ -119,7 +129,7 @@ export default async function HomePage({
       </section>
 
       {/* ══ EXPERTISE (Services) ══ */}
-      <section className="section" aria-labelledby="expertise-heading">
+      <section className="section reveal" aria-labelledby="expertise-heading">
         <div className="container">
           <h2 id="expertise-heading" className="section-title">
             {t.expertiseTitle}
@@ -162,7 +172,7 @@ export default async function HomePage({
 
       {/* ══ PORTFOLIO ══ */}
       <section
-        className="section"
+        className="section reveal"
         aria-labelledby="portfolio-heading"
       >
         <div className="container">
@@ -193,7 +203,7 @@ export default async function HomePage({
 
       {/* ══ TESTIMONIALS ══ */}
       <section
-        className="section"
+        className="section reveal"
         style={{ background: "var(--color-cream-dark)" }}
         aria-labelledby="testimonials-heading"
       >

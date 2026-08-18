@@ -11,7 +11,15 @@ import { useDictionary } from "@/i18n/dictionary-provider";
 import { LanguageSwitcher } from "./language-switcher";
 import { Search } from "./search";
 
-export function Navigation() {
+type NavLink = { href: string; label: string };
+
+type NavigationProps = {
+  links: NavLink[];
+  brand: string;
+  logoUrl?: string;
+};
+
+export function Navigation({ links, brand, logoUrl }: NavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const dict = useDictionary();
@@ -23,13 +31,16 @@ export function Navigation() {
   const locale = segments[1] || "en";
   const prefix = `/${locale}`;
 
-  const navItems = [
-    { href: `${prefix}`, label: dict.nav.home },
-    { href: `${prefix}/about`, label: dict.nav.about },
-    { href: `${prefix}/portfolio`, label: dict.nav.portfolio },
-    { href: `${prefix}/services`, label: dict.nav.services },
-    { href: `${prefix}/blog`, label: dict.nav.blog },
-  ];
+  // Internal links are stored without a locale, so the prefix is added here;
+  // external ones are passed through untouched.
+  const navItems = links.map((item) => ({
+    label: item.label,
+    href: item.href.startsWith("http")
+      ? item.href
+      : item.href === "/"
+        ? prefix
+        : `${prefix}${item.href.startsWith("/") ? item.href : `/${item.href}`}`,
+  }));
 
   // Check active state by comparing path without locale prefix
   const pathWithoutLocale = "/" + segments.slice(2).join("/");
@@ -43,8 +54,13 @@ export function Navigation() {
       <header className="site-header" role="banner">
         <div className="container">
           <div className="header-inner">
-            <Link href={prefix} className="brand" aria-label="Olga Emma Elume | Home">
-              Olga Emma Elume
+            <Link href={prefix} className="brand" aria-label={`${brand} | ${dict.nav.home}`}>
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={logoUrl} alt={brand} className="brand-logo" />
+              ) : (
+                brand
+              )}
             </Link>
 
             <nav className="nav-desktop" aria-label="Primary navigation">

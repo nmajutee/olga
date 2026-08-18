@@ -23,9 +23,16 @@ jobs:
 
       - run: npm ci
 
-      - run: npx opennextjs-cloudflare build
-        env:
-          WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
+      # cloudflare-env.d.ts is generated, not committed.
+      - run: npx wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts
+
+      - run: npm run typecheck
+
+      - run: npm run lint
+
+      # Runs the OpenNext build *and* scripts/patch-opennext-manifests.mjs.
+      # Deploying the unpatched handler breaks pages whose manifests are absent.
+      - run: npm run build:cloudflare
 
       - uses: cloudflare/wrangler-action@v3
         with:

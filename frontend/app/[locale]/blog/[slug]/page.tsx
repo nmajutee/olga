@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { formatPublishDate, getPostBySlug } from "@/lib/wordpress";
+import { formatPublishDate, getPostBySlug } from "@/lib/posts";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { getAuthorProfile } from "@/lib/profile";
+import { resolveRedirect } from "@/lib/redirects";
+import { getSettings } from "@/lib/settings";
+import { AuthorBox } from "@/components/author-box";
 import { translateHtml, translateText } from "@/lib/translate";
 
 type BlogPostPageProps = {
@@ -18,23 +22,37 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return { title: "Post not found" };
   }
 
-  let description = post.excerpt.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
-  let title = post.title;
+  // Editor-authored SEO fields win; the excerpt is only the fallback.
+  let description =
+    post.metaDescription ??
+    post.excerpt.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+  let title = post.metaTitle ?? post.title;
+
   if (locale !== "en") {
     title = await translateText(title, locale);
     description = await translateText(description, locale);
   }
 
+  // Sharing uses the cover image, then the site-wide fallback from SEO
+  // settings. There is no separate per-article share image to keep in step.
+  const settings = await getSettings();
+  const socialImage = post.coverImageUrl || settings.seo_default_og_image || null;
+
   return {
     title,
     description,
-    alternates: { canonical: `/${locale}/blog/${slug}` },
+    robots: post.noindex ? { index: false, follow: false } : undefined,
+    alternates: {
+      canonical: post.canonicalUrl ?? `/${locale}/blog/${slug}`,
+    },
     openGraph: {
       title: `${title} | Olga Emma Elume`,
       description,
       type: "article",
       publishedTime: post.date,
+      modifiedTime: post.updatedAt,
       authors: [post.authorName],
+      images: socialImage ? [socialImage] : undefined,
     },
   };
 }
@@ -47,10 +65,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getPostBySlug(slug);
 
   if (!post) {
+    // A renamed article leaves a redirect behind; follow it rather than
+    // serving a 404 to a link that used to work.
+    const moved = await resolveRedirect(`/blog/${slug}`);
+    if (moved) redirect(`/${locale}${moved.target}`);
     notFound();
   }
 
-  const authorInitial = post.authorName.charAt(0).toUpperCase();
+  // The live profile, so a renamed author or a new bio reaches old articles.
+  const author = await getAuthorProfile(post.authorId);
+  const authorName = author?.name ?? post.authorName;
+  const authorInitial = authorName.charAt(0).toUpperCase();
   const postUrl = `https://olgaemma.com/${locale}/blog/${slug}`;
   const excerptText = post.excerpt.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
 
@@ -70,11 +95,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     description: postDescription,
     url: postUrl,
     datePublished: post.date,
+    dateModified: post.updatedAt,
     inLanguage: locale,
+    wordCount: postContent.replace(/<[^>]*>/g, " ").split(/\s+/).filter(Boolean).length,
+    ...(post.coverImageUrl ? { image: post.coverImageUrl } : {}),
+    ...(post.tags.length ? { keywords: post.tags.join(", ") } : {}),
     author: {
       "@type": "Person",
       "@id": "https://olgaemma.com/#person",
-      name: post.authorName,
+      name: authorName,
+      ...(author?.avatarUrl ? { image: author.avatarUrl } : {}),
+      ...(author?.title ? { jobTitle: author.title } : {}),
     },
     publisher: { "@id": "https://olgaemma.com/#person" },
     isPartOf: { "@id": "https://olgaemma.com/#website" },
@@ -94,18 +125,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <header className="single-post-header">
             <div className="single-post-meta">
               <time dateTime={post.date}>{formatPublishDate(post.date, locale)}</time>
+              {post.readingMinutes > 0 && (
+                <>
+                  <span aria-hidden="true"> · </span>
+                  <span>{post.readingMinutes} min</span>
+                </>
+              )}
             </div>
             <h1>{postTitle}</h1>
             <div className="single-post-author">
               <div className="single-post-author-avatar" aria-hidden="true">
-                {authorInitial}
+                {author?.avatarUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={author.avatarUrl} alt="" className="single-post-author-photo" />
+                ) : (
+                  authorInitial
+                )}
               </div>
               <div>
-                <div className="single-post-author-name">{post.authorName}</div>
-                <div className="single-post-author-label">{t.author}</div>
+                <div className="single-post-author-name">{authorName}</div>
+                <div className="single-post-author-label">{author?.title || t.author}</div>
               </div>
             </div>
           </header>
+
+          {post.coverImageUrl && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={post.coverImageUrl}
+              alt={post.coverImageAlt ?? ""}
+              className="single-post-cover"
+            />
+          )}
 
           <div className="single-post-content">
             <div
@@ -113,6 +164,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               dangerouslySetInnerHTML={{ __html: postContent }}
             />
           </div>
+
+          {author && <AuthorBox profile={author} label={t.author} />}
 
           <div className="single-post-footer">
             <Link href={`${prefix}/blog`} className="btn btn-outline">

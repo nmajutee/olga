@@ -49,7 +49,7 @@ export default async function CaseStudiesPage({ params }: PageProps) {
       />
       <Breadcrumbs items={[{ label: dict.nav.home, href: prefix }, { label: dict.nav.caseStudies }]} />
 
-      <section className="section" aria-labelledby="cs-heading">
+      <section className="section reveal" aria-labelledby="cs-heading">
         <div className="container">
           <header className="page-header">
             <div className="section-eyebrow" aria-hidden="true">{t.eyebrow}</div>

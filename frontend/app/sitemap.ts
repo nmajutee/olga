@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getPosts } from "@/lib/wordpress";
+import { getPublishedSlugs } from "@/lib/posts";
 import { i18n } from "@/i18n/config";
+
+export const dynamic = "force-dynamic";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://olgaemma.com";
 
@@ -32,20 +34,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  // Dynamic blog posts from WordPress
+  // Published articles, straight from D1
   let blogPosts: MetadataRoute.Sitemap = [];
   try {
-    const posts = await getPosts(50);
+    const posts = await getPublishedSlugs();
     blogPosts = locales.flatMap((locale) =>
       posts.map((post) => ({
         url: `${BASE_URL}/${locale}/blog/${post.slug}`,
-        lastModified: new Date(post.date),
+        lastModified: new Date(post.updatedAt),
         changeFrequency: "monthly" as const,
         priority: 0.6,
       }))
     );
   } catch {
-    // WordPress may be unavailable during build
+    // The database is not reachable during a static build; ship the static paths.
   }
 
   return [...staticPages, ...blogPosts];

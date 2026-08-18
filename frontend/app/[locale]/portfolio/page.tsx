@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { PortfolioGrid } from "@/components/portfolio-grid";
+import { listItems } from "@/lib/collections";
 
 export async function generateMetadata({
   params,
@@ -24,7 +25,21 @@ export default async function PortfolioPage({
   const { locale } = await params;
   const dict = await getDictionary(locale);
   const t = dict.portfolioPage;
-  const items = dict.home.portfolioItems;
+
+  // Dashboard-managed pieces take over as soon as any exist; until then the
+  // translated defaults stay, so the page is never empty mid-migration.
+  const managed = await listItems("portfolio", { publishedOnly: true });
+  const items = managed.length
+    ? managed.map((item) => ({
+        id: item.id,
+        title: item.title,
+        category: item.extra.category || "Work",
+        image: item.imageUrl ?? "",
+        activity: item.summary,
+        role: item.extra.role || item.extra.location || "",
+        impact: item.extra.year || "",
+      }))
+    : dict.home.portfolioItems;
 
   return (
     <>
@@ -38,7 +53,7 @@ export default async function PortfolioPage({
         </div>
       </div>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section reveal" style={{ paddingTop: 0 }}>
         <div className="container">
           <PortfolioGrid
             items={items}

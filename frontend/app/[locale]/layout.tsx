@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { ViewBeacon } from "@/components/view-beacon";
 import { DictionaryProvider } from "@/i18n/dictionary-provider";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { i18n } from "@/i18n/config";
+import { getSettings, brandStyleTag } from "@/lib/settings";
+import { listNav } from "@/lib/navigation";
+import { getAuthorProfile } from "@/lib/profile";
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ locale }));
@@ -11,16 +15,29 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
+/**
+ * The shell reads settings and menus from D1 on every request. Without this,
+ * Next would statically generate these pages at build time — when D1 is
+ * unreachable — and bake the fallback colours and menu into the HTML, so
+ * nothing changed in Appearance or Navigation would ever reach the site.
+ */
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
+  const [dict, settings] = await Promise.all([getDictionary(locale), getSettings()]);
+
+  // The share image and handle are editable in SEO settings; both were
+  // hardcoded here, so those controls did nothing.
+  const shareImage = settings.seo_default_og_image || "/og-image.jpg";
+  const twitterHandle = settings.seo_twitter_handle || "@mumolga";
 
   return {
-    metadataBase: new URL("https://olgaemma.com"),
+    metadataBase: new URL(settings.site_url || "https://olgaemma.com"),
     title: {
       default: dict.meta.siteTitle,
       template: "%s | Olga Emma Elume",
@@ -84,7 +101,7 @@ export async function generateMetadata({
       description: dict.meta.ogDescription,
       images: [
         {
-          url: "/og-image.jpg",
+          url: shareImage,
           width: 1200,
           height: 630,
           alt: "Olga Emma Elume | Strategic Communications Professional",
@@ -95,8 +112,8 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: dict.meta.siteTitle,
       description: dict.meta.ogDescription,
-      images: ["/og-image.jpg"],
-      creator: "@mumolga",
+      images: [shareImage],
+      creator: twitterHandle,
     },
     robots: {
       index: true,
@@ -132,24 +149,54 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
+  const [dict, settings, headerNav, footerNav, author] = await Promise.all([
+    getDictionary(locale),
+    getSettings(),
+    listNav("header"),
+    listNav("footer"),
+    getAuthorProfile(),
+  ]);
+
+  const brandCss = brandStyleTag(settings);
+
+  // Menus fall back to the dictionary until someone edits them in Navigation.
+  const navLinks = headerNav.length
+    ? headerNav
+        .filter((item) => item.visible)
+        .map((item) => ({
+          href: item.href,
+          label: locale === "fr" && item.labelFr ? item.labelFr : item.labelEn,
+        }))
+    : [
+        { href: "/", label: dict.nav.home },
+        { href: "/about", label: dict.nav.about },
+        { href: "/portfolio", label: dict.nav.portfolio },
+        { href: "/services", label: dict.nav.services },
+        { href: "/blog", label: dict.nav.blog },
+      ];
+
+  const footerLinks = footerNav
+    .filter((item) => item.visible)
+    .map((item) => ({
+      href: item.href,
+      label: locale === "fr" && item.labelFr ? item.labelFr : item.labelEn,
+    }));
 
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": "https://olgaemma.com/#person",
-    name: "Olga Emma Elume",
-    url: "https://olgaemma.com",
-    jobTitle: "Professional Communications Consultant",
+    name: author?.name ?? settings.site_title,
+    url: settings.site_url,
+    jobTitle: author?.title || "Professional Communications Consultant",
     description:
       "Professional Communications Consultant with 6+ years of experience in strategic communications, media relations, advocacy, and professional communications services across Africa.",
-    image: "https://olgaemma.com/og-image.jpg",
-    sameAs: [
-      "https://www.linkedin.com/in/olgaelume",
-      "https://x.com/mumolga",
-      "https://www.instagram.com/olgaelume",
-      "https://www.facebook.com/share/1KZs6j1Db6/",
-    ],
+    image: author?.avatarUrl
+      ? `${settings.site_url}${author.avatarUrl}`
+      : `${settings.site_url}/og-image.jpg`,
+    sameAs: [author?.linkedin, author?.socialX, author?.instagram, author?.website].filter(
+      (link): link is string => Boolean(link && link.trim()),
+    ),
     knowsAbout: [
       "Professional Communications",
       "Strategic Communications",
@@ -170,11 +217,10 @@ export default async function LocaleLayout({
       "Professional Communications Development",
       "Brand Strategy",
     ],
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "CM",
-      addressLocality: "Buea",
-    },
+    ...(author?.location
+      ? { address: { "@type": "PostalAddress", addressLocality: author.location } }
+      : {}),
+    ...(author?.bio ? { description: author.bio } : {}),
     knowsLanguage: ["en", "fr"],
   };
 
@@ -192,6 +238,21 @@ export default async function LocaleLayout({
 
   return (
     <>
+      {brandCss && <style dangerouslySetInnerHTML={{ __html: brandCss }} />}
+
+      {settings.seo_google_verification && (
+        <meta name="google-site-verification" content={settings.seo_google_verification} />
+      )}
+      {settings.seo_bing_verification && (
+        <meta name="msvalidate.01" content={settings.seo_bing_verification} />
+      )}
+      {settings.analytics_html && (
+        <div
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: settings.analytics_html }}
+        />
+      )}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -206,13 +267,14 @@ export default async function LocaleLayout({
           {dict.skipToContent}
         </a>
 
-        <Navigation />
+        <Navigation links={navLinks} brand={settings.logo_text || settings.site_title} logoUrl={settings.logo_url} />
 
         <main id="main-content" lang={locale}>
           {children}
         </main>
 
-        <Footer />
+        <Footer links={footerLinks} note={settings.footer_note} settings={settings} />
+        <ViewBeacon />
       </DictionaryProvider>
     </>
   );

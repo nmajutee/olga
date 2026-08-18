@@ -20,8 +20,8 @@ async function translateChunk(
 
     if (!res.ok) return text;
 
-    const data = await res.json();
-    const translated = (data[0] as Array<[string]>)
+    const data = (await res.json()) as Array<Array<[string]>>;
+    const translated = data[0]
       .map((segment) => segment[0])
       .join("");
 

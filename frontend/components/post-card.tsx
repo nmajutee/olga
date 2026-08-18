@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { formatPublishDate, type WpPostSummary } from "@/lib/wordpress";
+import { formatPublishDate, type PostSummary } from "@/lib/posts";
 
 type PostCardProps = {
-  post: WpPostSummary;
+  post: PostSummary;
   locale?: string;
   readMoreLabel?: string;
 };
@@ -17,7 +17,17 @@ export function PostCard({ post, locale = "en", readMoreLabel = "Read article" }
     <article className="blog-card">
       <Link href={`${prefix}/blog/${post.slug}`} aria-hidden="true" tabIndex={-1}>
         <div className="blog-card-visual">
-          <span className="blog-card-visual-text" aria-hidden="true">✦</span>
+          {post.coverImageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={post.coverImageUrl}
+              alt=""
+              loading="lazy"
+              className="blog-card-image"
+            />
+          ) : (
+            <span className="blog-card-visual-text" aria-hidden="true">✦</span>
+          )}
         </div>
       </Link>
       <div className="blog-card-body">

@@ -42,15 +42,27 @@
   --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ═══ BASE ═══ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; scroll-behavior: smooth; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body { min-height: 100vh; color: var(--color-charcoal); background: #FFFFFF; font-family: var(--font-body); line-height: 1.6; }
-::selection { background: var(--color-blush); color: var(--color-charcoal); }
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; display: block; }
-ul, ol { list-style: none; }
-button { font: inherit; cursor: pointer; border: none; background: none; }
+/* ═══ BASE ═══
+   Declared inside @layer base so Tailwind's utilities can still override it.
+   Unlayered rules beat every cascade layer regardless of specificity, so an
+   unlayered `* { margin: 0; padding: 0 }` silently kills every p-* and m-*
+   utility in the project — including the whole admin dashboard. */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { min-height: 100vh; color: var(--color-charcoal); background: #FFFFFF; font-family: var(--font-body); line-height: 1.6; }
+  ::selection { background: var(--color-blush); color: var(--color-charcoal); }
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-rose);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  :where(a, button):focus:not(:focus-visible) { outline: none; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  ul, ol { list-style: none; }
+  button { font: inherit; cursor: pointer; border: none; background: none; }
+}
 
 /* ─── Skip Link ─── */
 .skip-link { position: absolute; top: -100%; left: 1rem; z-index: 9999; padding: 0.75rem 1.5rem; background: var(--color-charcoal); color: white; border-radius: var(--radius-md); font-weight: 600; font-size: 0.875rem; transition: top 0.2s; }
@@ -176,14 +188,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 
 /* ═══ SECTIONS ═══ */
 .section { padding-block: 3.5rem; }
+.section-alt { background: var(--color-cream-dark); }
+.section-hairline { border-top: 1px solid rgba(44, 62, 80, 0.07); }
 @media (min-width: 480px) { .section { padding-block: 4.5rem; } }
 @media (min-width: 768px) { .section { padding-block: 5.5rem; } }
 @media (min-width: 1024px) { .section { padding-block: 7rem; } }
-.section-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-rose); margin-bottom: 1rem; }
-.section-eyebrow::before { content: ""; width: 1.5rem; height: 1.5px; background: var(--color-rose); }
-.section-title { font-family: var(--font-display); font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--color-charcoal); text-align: center; }
-.section-title::after { content: ""; display: block; width: 3.5rem; height: 3px; background: var(--color-rose); margin: 0.75rem auto 0; border-radius: 2px; }
-.section-subtitle { margin-top: 1rem; max-width: 36rem; margin-inline: auto; color: var(--color-stone); font-size: 0.95rem; line-height: 1.65; text-align: center; }
+.section-eyebrow { display: inline-flex; align-items: center; gap: 0.625rem; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-rose); margin-bottom: 1.125rem; }
+.section-eyebrow::before { content: ""; width: 1.75rem; height: 1px; background: currentColor; opacity: 0.55; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.625rem, 4.2vw, 2.625rem); font-weight: 600; line-height: 1.12; letter-spacing: -0.028em; color: var(--color-charcoal); text-align: center; text-wrap: balance; }
+.section-subtitle { margin-top: 1rem; max-width: 34rem; margin-inline: auto; color: var(--color-stone); font-size: 0.95rem; line-height: 1.7; text-align: center; text-wrap: pretty; }
 @media (min-width: 480px) { .section-subtitle { font-size: 1rem; } }
 @media (min-width: 768px) { .section-subtitle { font-size: 1.125rem; line-height: 1.7; margin-top: 1.25rem; } }
 
@@ -194,7 +207,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 @keyframes heroFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes heroSlideRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
 
-.hero { position: relative; padding: 3rem 0; min-height: auto; display: flex; align-items: center; overflow: hidden; background: linear-gradient(135deg, #4A7FC1 0%, #3A6FB5 50%, #2E5E9E 100%); color: white; text-align: center; }
+.hero { position: relative; padding: 3rem 0; min-height: auto; display: flex; align-items: center; overflow: hidden; background: var(--color-midnight); color: white; text-align: center; }
+.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, var(--color-rose) 0%, var(--color-rose-deep) 48%, var(--color-midnight) 100%); }
+/* One off-centre light source, so the panel reads as lit rather than printed. */
+.hero::after { content: ""; position: absolute; top: -30%; right: -10%; width: 46rem; height: 46rem; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, transparent 62%); pointer-events: none; }
+.hero > * { position: relative; z-index: 1; }
 @media (min-width: 480px) { .hero { padding: 4rem 0; } }
 @media (min-width: 768px) { .hero { padding: 5rem 0 6rem; min-height: 60vh; } }
 @media (min-width: 1024px) { .hero { min-height: 70vh; } }
@@ -208,10 +225,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 .hero-greeting { font-family: var(--font-body); font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.7); letter-spacing: 0.02em; margin-bottom: 0.75rem; opacity: 0; animation: heroFadeUp 0.6s var(--ease-out-expo) 0.15s forwards; }
 @media (min-width: 768px) { .hero-greeting { font-size: 1.125rem; margin-bottom: 1rem; } }
-.hero-title { font-family: var(--font-display); font-size: clamp(1.9rem, 5vw, 3.25rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; color: white; opacity: 0; animation: heroFadeUp 0.8s var(--ease-out-expo) 0.25s forwards; text-align: center; max-width: 48rem; }
+.hero-title { font-family: var(--font-display); font-size: clamp(2rem, 5.2vw, 3.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.035em; text-wrap: balance; color: white; opacity: 0; animation: heroFadeUp 0.8s var(--ease-out-expo) 0.25s forwards; text-align: center; max-width: 48rem; }
 .hero-title-accent { position: relative; color: white; }
 .hero-title-accent::after { content: ""; position: absolute; bottom: 2px; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.3)); border-radius: 2px; }
-.hero-desc { margin-top: 1.25rem; max-width: 32rem; color: rgba(255,255,255,0.7); font-size: 0.925rem; line-height: 1.7; opacity: 0; animation: heroFadeUp 0.7s var(--ease-out-expo) 0.4s forwards; text-align: center; }
+.hero-desc { margin-top: 1.25rem; max-width: 32rem; color: rgba(255,255,255,0.78); font-size: 0.925rem; line-height: 1.7; text-wrap: pretty; opacity: 0; animation: heroFadeUp 0.7s var(--ease-out-expo) 0.4s forwards; text-align: center; }
 @media (min-width: 480px) { .hero-desc { font-size: 0.975rem; margin-top: 1.25rem; } }
 @media (min-width: 768px) { .hero-desc { font-size: 1.05rem; line-height: 1.75; margin-top: 1.5rem; } }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; opacity: 0; animation: heroFadeUp 0.7s var(--ease-out-expo) 0.55s forwards; justify-content: center; }
@@ -572,7 +589,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 .prose { max-width: 44rem; margin-inline: auto; line-height: 1.85; color: var(--color-charcoal); }
 .prose h2 { font-family: var(--font-display); font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; }
 .prose h3 { font-family: var(--font-display); font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem; }
-.prose p { margin-bottom: 1rem; color: var(--color-stone); }
+/* Article body sits at 5.4:1 against white. --color-stone is 4.34:1, which
+   fails WCAG AA for normal text — fine for incidental labels, not for a
+   thousand words of reading. */
+.prose p, .prose li { color: #5A6B7F; }
+.prose p { margin-bottom: 1rem; }
 .prose ul, .prose ol { padding-left: 1.5rem; list-style: disc; margin-bottom: 1rem; }
 .prose li { margin-bottom: 0.35rem; color: var(--color-stone); }
 .prose a { color: var(--color-rose); text-decoration: underline; text-underline-offset: 3px; }
@@ -911,7 +932,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 .stats-section .section-eyebrow { color: rgba(255,255,255,0.7); }
 .stats-section .section-eyebrow::before { background: rgba(255,255,255,0.5); }
 .stats-section .section-title { color: white; }
-.stats-section .section-title::after { background: rgba(255,255,255,0.4); }
 .stats-section .section-subtitle { color: rgba(255,255,255,0.7); }
 .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 2rem; } }
@@ -972,3 +992,179 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 .portfolio-modal-section:last-child { margin-bottom: 0; }
 .portfolio-modal-section h3 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-rose); margin-bottom: 0.5rem; }
 .portfolio-modal-section p { color: var(--color-stone); font-size: 0.95rem; line-height: 1.8; }
+
+/* ─── Cover images (uploaded through the dashboard) ─── */
+.blog-card-image, .blog-featured-image { width: 100%; height: 100%; object-fit: cover; }
+.single-post-cover {
+  width: 100%;
+  max-height: 26rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2.5rem;
+}
+
+
+/* ═══ SCROLL REVEAL ═══
+   Scroll-driven animations where supported, so sections arrive rather than
+   appear. No JavaScript, and nothing is hidden when the feature is absent —
+   the default state is visible and the animation only ever adds to it. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+  }
+}
+
+@keyframes reveal-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ═══ BRAND LOGO ═══ */
+.brand-logo { height: 2rem; width: auto; object-fit: contain; }
+
+/* ═══ CARD SURFACES ═══
+   One shadow language across cards: a hairline that carries the edge and a
+   soft lift that only appears on hover, rather than a permanent drop shadow. */
+.blog-card, .expertise-card, .case-card, .service-card {
+  border: 1px solid rgba(44, 62, 80, 0.07);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.blog-card:hover, .expertise-card:hover, .case-card:hover, .service-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(74, 127, 193, 0.28);
+  box-shadow: var(--shadow-card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-card:hover, .expertise-card:hover, .case-card:hover, .service-card:hover {
+    transform: none;
+  }
+}
+
+/* ═══ AUTHOR BOX ═══ */
+.author-box {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  margin-top: 3rem;
+  padding: 1.75rem;
+  border: 1px solid rgba(44, 62, 80, 0.09);
+  border-radius: var(--radius-lg);
+  background: var(--color-cream-dark);
+}
+@media (max-width: 40rem) {
+  .author-box { flex-direction: column; gap: 1rem; padding: 1.25rem; }
+}
+
+.author-box-avatar {
+  flex-shrink: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--color-rose);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.author-box-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.author-box-body { min-width: 0; }
+.author-box-label {
+  font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--color-stone-light);
+}
+.author-box-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 600; line-height: 1.2;
+  letter-spacing: -0.02em; color: var(--color-charcoal);
+  margin-top: 0.35rem;
+}
+.author-box-role { font-size: 0.875rem; color: var(--color-rose); margin-top: 0.2rem; font-weight: 500; }
+.author-box-bio { font-size: 0.9375rem; line-height: 1.65; color: var(--color-stone); margin-top: 0.75rem; text-wrap: pretty; }
+.author-box-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+.author-box-link {
+  font-size: 0.8125rem; font-weight: 600; color: var(--color-charcoal);
+  border-bottom: 1px solid rgba(74, 127, 193, 0.4);
+  padding-bottom: 1px;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+.author-box-link:hover { color: var(--color-rose); border-color: var(--color-rose); }
+.single-post-author-photo { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+
+
+/* ═══ ARTICLE IMAGES ═══
+   Placement classes written by the editor's media picker. Kept identical to
+   the editor's own rules so the preview is honest. */
+.prose :is(img, figure) { border-radius: var(--radius-lg); }
+.prose img { height: auto; }
+.prose :is(img, figure).align-center { display: block; margin-inline: auto; }
+.prose :is(img, figure).align-wide   { display: block; width: 100%; }
+.prose figure { margin-block: 2rem; }
+.prose figure img { width: 100%; border-radius: var(--radius-lg); }
+.prose figcaption {
+  margin-top: 0.7rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-stone-light);
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .prose :is(img, figure).align-left  { float: left;  margin: 0.4em 2rem 1.25rem 0; max-width: 45%; }
+  .prose :is(img, figure).align-right { float: right; margin: 0.4em 0 1.25rem 2rem; max-width: 45%; }
+}
+/* Floats would wreck a narrow column, so they centre on small screens. */
+@media (max-width: 47.99rem) {
+  .prose :is(img, figure):is(.align-left, .align-right) {
+    float: none; display: block; margin-inline: auto; max-width: 100%;
+  }
+}
+
+/* ═══ 404 ═══ */
+.notfound { max-width: 46rem; margin-inline: auto; text-align: center; padding-block: 2rem; }
+.notfound-actions { margin-top: 2rem; }
+.notfound-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-top: 3.5rem;
+  text-align: left;
+}
+@media (min-width: 40rem) { .notfound-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+
+.notfound-card {
+  display: block;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid rgba(44, 62, 80, 0.09);
+  border-radius: var(--radius-lg);
+  background: var(--color-cream-dark);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+.notfound-card:hover { border-color: var(--color-rose); transform: translateY(-2px); }
+.notfound-card-label {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--color-charcoal);
+}
+.notfound-card-hint {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #5A6B7F;
+}
+
+@media (prefers-reduced-motion: reduce) { .notfound-card:hover { transform: none; } }

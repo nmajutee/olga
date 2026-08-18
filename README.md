@@ -1,115 +1,111 @@
-# Headless WordPress + Next.js Starter
+# olgaemma.com
 
-This workspace is split into two parts:
+A Next.js site and its own editorial back office, running entirely on Cloudflare
+Workers. There is no separate CMS to host, patch, or pay for — content lives in
+D1, uploads live in R2, and the dashboard is part of the same deployment.
 
-- `wordpress/`: a local WordPress instance your client can use through the normal dashboard.
-- `frontend/`: a Next.js app that fetches content from WordPress through WPGraphQL.
-
-The goal is simple: editors stay in WordPress, the public site runs on Next.js.
+```
+frontend/
+  app/[locale]/…      public site (en, fr)
+  app/admin/…         The Desk — dashboard, sign-in required
+  app/api/admin/…     media upload, AI drafting (SSE)
+  app/media/[...key]  public read path for R2 objects
+  db/schema.sql       D1 schema
+  lib/                data access, auth, sanitiser, SEO analysis
+  scripts/            WordPress importer
+```
 
 ## Architecture
 
-1. Content editors write posts, pages, and media in WordPress.
-2. WordPress exposes structured content through the WPGraphQL plugin.
-3. The Next.js app fetches that content server-side and renders the frontend.
+| Concern | Where it lives |
+| --- | --- |
+| Pages, API, dashboard | One Worker (`@opennextjs/cloudflare`) |
+| Articles, settings, users, sessions | Cloudflare D1 (`DB`) |
+| Images and PDFs | Cloudflare R2 (`MEDIA`), served at `/media/*` |
+| Article drafting | Claude (`claude-opus-5`) via `ANTHROPIC_API_KEY` |
+| Contact email | Resend via `RESEND_API_KEY` |
 
-## Quick start
+Sessions are random tokens in an `HttpOnly` cookie; D1 stores only their
+SHA-256, so a database dump cannot be replayed as a login. Passwords are
+PBKDF2-SHA256 at 210,000 iterations.
 
-### 1. Start WordPress
+> **Workers Paid is required.** One password hash costs ~55ms of CPU, well past
+> the free tier's 10ms per-request limit. Everything else fits comfortably.
 
-```bash
-cd wordpress
-cp .env.example .env
-docker compose up -d
-```
-
-Open `http://localhost:8080` and complete the WordPress install.
-
-Then install these plugins from the WordPress dashboard:
-
-- `WPGraphQL`
-- `WPGraphQL for ACF` if you plan to model custom fields with ACF
-
-Your GraphQL endpoint will be:
-
-```text
-http://localhost:8080/graphql
-```
-
-### 2. Start the Next.js frontend
+## First-time setup
 
 ```bash
 cd frontend
-cp .env.example .env.local
 npm install
+
+npx wrangler d1 create olga-db          # paste the id into wrangler.jsonc
+npx wrangler r2 bucket create olga-media
+
+npm run db:schema                        # create tables
+npm run db:seed                          # default settings
+
+npx wrangler secret put ANTHROPIC_API_KEY
+npx wrangler secret put RESEND_API_KEY
+
+npm run deploy
+```
+
+Then open `https://your-domain/admin`. The first visit shows a one-time setup
+screen that creates the admin account and closes itself afterwards.
+
+## Local development
+
+```bash
+cd frontend
+npm run db:schema:local
+npm run db:seed:local
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+The dashboard is at `http://localhost:3000/admin`, backed by a local SQLite
+copy of D1 under `.wrangler/`.
 
-## Content flow
+## Importing the old WordPress content
 
-- Homepage pulls the latest posts from WordPress.
-- `/blog` renders a blog archive.
-- `/blog/[slug]` renders individual posts from WordPress content.
-
-## Production direction
-
-For deployment, keep WordPress on a managed host or VPS for editorial workflows and deploy the Next.js app separately on a frontend host such as Vercel. Set `NEXT_PUBLIC_WORDPRESS_URL` and `WORDPRESS_GRAPHQL_ENDPOINT` to the production WordPress instance.
-
-## Cloudflare frontend + local WordPress
-
-If you deploy the frontend to Cloudflare now, the frontend cannot reach `http://localhost:8080/graphql` on your laptop. `localhost` only exists on your machine, not inside Cloudflare.
-
-For this temporary phase, expose your local WordPress with a public tunnel and point the frontend at that public URL.
-
-### Recommended temporary flow
-
-1. Start WordPress locally.
-2. Install and activate `WPGraphQL`.
-3. Expose local WordPress through a public hostname.
-4. Set Cloudflare environment variables to that public hostname.
-5. Verify the connection through `/api/wordpress-status` on the deployed frontend.
-
-### Example using Cloudflare Tunnel
-
-Install `cloudflared`, then run:
+Run this from a machine that can reach the old site — the importer is local
+precisely because the old host is often unreachable from Cloudflare's network.
 
 ```bash
-cloudflared tunnel --url http://localhost:8080
+cd frontend
+npm run import:wordpress -- https://old-site.example          # dry run
+npm run import:wordpress -- https://old-site.example --apply  # write to D1 + R2
 ```
 
-That gives you a temporary public URL similar to:
+The dry run writes `db/import.sql` and downloads media into `.import-media/` so
+you can read both before anything touches production. Posts are inserted with
+`INSERT OR IGNORE` keyed on slug, so re-running is safe. Body URLs pointing at
+`wp-content/uploads` are rewritten to `/media/…`.
 
-```text
-https://random-name.trycloudflare.com
-```
+## The dashboard
 
-Use these values in your Cloudflare frontend environment:
+- **Overview** — counts, recently edited, and published articles scoring under 70.
+- **Articles** — full CRUD. The editor is TipTap, storing sanitised HTML; the
+  right-hand rail scores the piece live against 15 weighted SEO checks and shows
+  a real search-result preview.
+- **Commission a draft** — a brief (topic, focus keyword, audience, voice,
+  length, language) goes to Claude, which returns a structured draft: title,
+  slug, meta title, meta description, excerpt, tags, and article HTML. It
+  streams so the request survives the wait. **Every draft needs fact-checking
+  before publishing.**
+- **Media** — upload, describe (alt text), copy path, delete.
+- **Settings** — site identity, SEO defaults, contact and social links, house
+  voice for drafting, analytics snippet, password change.
 
-```text
-NEXT_PUBLIC_SITE_URL=https://your-frontend-domain.example
-NEXT_PUBLIC_WORDPRESS_URL=https://random-name.trycloudflare.com
-WORDPRESS_GRAPHQL_ENDPOINT=https://random-name.trycloudflare.com/graphql
-```
+## Content safety
 
-After deployment, open:
+Everything written to `posts.content` passes through `lib/sanitize-html.ts`, an
+allowlist sanitiser: unknown tags are dropped, `<script>`/`<iframe>` are dropped
+with their contents, event handlers and `style` are stripped, and `href`/`src`
+must match a safe-scheme pattern. It is idempotent, so repeated edits do not
+compound entity escaping.
 
-```text
-https://your-frontend-domain.example/api/wordpress-status
-```
+## Deploying
 
-If the connection works, the endpoint returns JSON with `ok: true`.
-
-### Important note about uploads and admin
-
-Your customer should continue using the normal WordPress admin on the tunneled URL for now. Later, when you migrate WordPress to a real host, replace the two WordPress environment variables in Cloudflare with the permanent domain.
-
-### Migration later
-
-When WordPress moves off local development, you only need to update:
-
-- `NEXT_PUBLIC_WORDPRESS_URL`
-- `WORDPRESS_GRAPHQL_ENDPOINT`
-
-The Next.js frontend code can stay the same.
+`git push origin main` runs `.github/workflows/deploy.yml`. It needs two repo
+secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Schema changes are
+not automatic — run `npm run db:schema` yourself when `db/schema.sql` changes.

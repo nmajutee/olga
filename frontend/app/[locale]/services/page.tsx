@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { listItems, splitLines } from "@/lib/collections";
 import {
   MegaphoneIcon,
   ChatBubbleLeftRightIcon,
@@ -38,6 +39,18 @@ export default async function ServicesPage({ params }: PageProps) {
   const dict = await getDictionary(locale);
   const t = dict.services;
   const prefix = `/${locale}`;
+
+  // Dashboard-managed services replace the translated defaults as soon as any
+  // exist, so the page is never half-migrated.
+  const managed = await listItems("service", { publishedOnly: true });
+  const services = managed.length
+    ? managed.map((item) => ({
+        id: item.slug,
+        title: item.title,
+        desc: item.summary,
+        features: splitLines(item.extra.deliverables),
+      }))
+    : t.items;
   const servicesUrl = `https://olgaemma.com/${locale}/services`;
 
   const jsonLd = {
@@ -52,7 +65,7 @@ export default async function ServicesPage({ params }: PageProps) {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Professional Communications Services",
-      itemListElement: t.items.map((s) => ({
+      itemListElement: services.map((s) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
@@ -88,7 +101,7 @@ export default async function ServicesPage({ params }: PageProps) {
       />
       <Breadcrumbs items={[{ label: dict.nav.home, href: prefix }, { label: dict.nav.services }]} />
 
-      <section className="section" aria-labelledby="services-heading">
+      <section className="section reveal" aria-labelledby="services-heading">
         <div className="container">
           <header className="page-header">
             <div className="section-eyebrow" aria-hidden="true">{t.eyebrow}</div>
@@ -97,8 +110,8 @@ export default async function ServicesPage({ params }: PageProps) {
           </header>
 
           <div className="services-grid">
-            {t.items.map((s, i) => {
-              const Icon = serviceIcons[i];
+            {services.map((s, i) => {
+              const Icon = serviceIcons[i % serviceIcons.length];
               return (
                 <div key={s.id} id={s.id} className="service-card">
                   <div className="service-icon">

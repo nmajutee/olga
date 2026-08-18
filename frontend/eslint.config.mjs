@@ -8,6 +8,7 @@ const config = [
 		".open-next/**",
 		"dist/**",
 		".wrangler/**",
+		"cloudflare-env.d.ts",
 	]),
 ];
 

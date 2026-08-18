@@ -148,7 +148,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
       </div>
 
       {/* ── Results ── */}
-      <section className="section" style={{ background: "var(--color-cream-dark)" }} aria-labelledby="results-heading">
+      <section className="section reveal" style={{ background: "var(--color-cream-dark)" }} aria-labelledby="results-heading">
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: "2rem" }}>
             <div className="section-eyebrow" style={{ justifyContent: "center" }} aria-hidden="true">

@@ -120,7 +120,7 @@ export default function ContactPage() {
       <>
         <Breadcrumbs items={[{ label: dict.nav.home, href: prefix }, { label: dict.nav.contact }]} />
 
-        <section className="section">
+        <section className="section reveal">
           <div className="contact-success">
             <div className="contact-success-icon">
               <svg
@@ -179,7 +179,7 @@ export default function ContactPage() {
       />
       <Breadcrumbs items={[{ label: dict.nav.home, href: prefix }, { label: dict.nav.contact }]} />
 
-      <section className="section" aria-labelledby="contact-heading">
+      <section className="section reveal" aria-labelledby="contact-heading">
         <div className="container">
           <div className="contact-layout">
             {/* ── Left Column: Info ── */}

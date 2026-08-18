@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { CONTACT_EMAIL } from "@/lib/contact";
+import { recordSubmission } from "@/lib/messages";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const RESEND_SENDER_NAME = "Olga Emma Website";
@@ -156,7 +157,22 @@ export async function POST(request: Request) {
     }),
   });
 
-  if (!resendResponse.ok) {
+  const emailed = resendResponse.ok;
+
+  // Archive first, regardless of delivery. An email outage must never be the
+  // reason a client enquiry disappears — the dashboard inbox is the record.
+  await recordSubmission({
+    name: payload.name,
+    email: payload.email,
+    company: payload.company,
+    inquiry: payload.inquiry,
+    message: payload.message,
+    locale: payload.locale || "en",
+    pageUrl: payload.pageUrl,
+    emailed,
+  });
+
+  if (!emailed) {
     const resendError = await resendResponse.text();
     console.error(
       `[contact] Resend request failed with ${resendResponse.status}: ${resendError}`,

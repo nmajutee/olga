@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { PostCard } from "@/components/post-card";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { formatPublishDate, getPostsResult } from "@/lib/wordpress";
+import { formatPublishDate, getPostsResult } from "@/lib/posts";
 import { getDictionary } from "@/i18n/get-dictionary";
 
 export const dynamic = "force-dynamic";
@@ -70,13 +70,22 @@ export default async function BlogIndexPage({ params }: PageProps) {
       </section>
 
       {/* Posts */}
-      <section className="section">
+      <section className="section reveal">
         <div className="container">
           {posts.length > 0 ? (
             <>
               <Link href={`${prefix}/blog/${posts[0].slug}`} className="blog-featured">
                 <div className="blog-featured-visual">
-                  <span className="blog-featured-visual-text" aria-hidden="true">✦</span>
+                  {posts[0].coverImageUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={posts[0].coverImageUrl}
+                      alt=""
+                      className="blog-featured-image"
+                    />
+                  ) : (
+                    <span className="blog-featured-visual-text" aria-hidden="true">✦</span>
+                  )}
                 </div>
                 <div className="blog-featured-body">
                   <span className="blog-featured-tag">{t.featuredLabel}</span>

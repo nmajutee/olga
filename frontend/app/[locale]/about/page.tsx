@@ -63,7 +63,7 @@ export default async function AboutPage({ params }: PageProps) {
       <Breadcrumbs items={[{ label: dict.nav.home, href: prefix }, { label: dict.nav.about }]} />
 
       {/* ── Intro ── */}
-      <section className="section" aria-labelledby="about-heading">
+      <section className="section reveal" aria-labelledby="about-heading">
         <div className="container">
           <div className="about-intro">
             <div className="about-portrait">
@@ -103,7 +103,7 @@ export default async function AboutPage({ params }: PageProps) {
 
       {/* ── Core Competencies ── */}
       <section
-        className="section"
+        className="section reveal"
         style={{ background: "var(--color-cream-dark)" }}
         aria-labelledby="competencies-heading"
       >
@@ -125,7 +125,7 @@ export default async function AboutPage({ params }: PageProps) {
       </section>
 
       {/* ── Process ── */}
-      <section className="section" aria-labelledby="process-heading">
+      <section className="section reveal" aria-labelledby="process-heading">
         <div className="container">
           <div className="section-eyebrow" aria-hidden="true">{t.processEyebrow}</div>
           <h2 id="process-heading" className="section-title">
@@ -146,7 +146,7 @@ export default async function AboutPage({ params }: PageProps) {
 
       {/* ── Experience Timeline ── */}
       <section
-        className="section"
+        className="section reveal"
         style={{ background: "var(--color-cream-dark)" }}
         aria-labelledby="timeline-heading"
       >
@@ -209,7 +209,7 @@ export default async function AboutPage({ params }: PageProps) {
       </section>
 
       {/* ── Education ── */}
-      <section className="section" aria-labelledby="education-heading">
+      <section className="section reveal" aria-labelledby="education-heading">
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: "3rem" }}>
             <div className="section-eyebrow" style={{ justifyContent: "center" }} aria-hidden="true">
