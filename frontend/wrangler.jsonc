@@ -36,6 +36,13 @@
       "bucket_name": "olga-media"
     }
   ],
+  // Persistent request logs, queryable from the dashboard and API. The tail
+  // WebSocket is not always reachable, and a 500 with no log is undebuggable.
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+
   // Non-secret config. The contact route refuses to send without a From
   // address, so it belongs here rather than only in .env.local.
   "vars": {

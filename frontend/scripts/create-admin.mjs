@@ -17,7 +17,7 @@ import { writeFileSync, unlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-const PBKDF2_ITERATIONS = 210_000; // must match lib/auth.ts
+const PBKDF2_ITERATIONS = 100_000; // must match lib/auth.ts (Workers caps PBKDF2 here)
 
 function arg(name) {
   const index = process.argv.indexOf(`--${name}`);

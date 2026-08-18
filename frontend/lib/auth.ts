@@ -3,7 +3,12 @@ import { getDb, newId } from "@/lib/db";
 
 const COOKIE_NAME = "olga_session";
 const SESSION_DAYS = 7;
-const PBKDF2_ITERATIONS = 210_000;
+// Workers caps PBKDF2 at 100k iterations: `deriveBits` rejects anything higher
+// and the request 500s. Miniflare does not enforce the cap, so a larger value
+// passes locally and fails only once deployed. This is the platform maximum —
+// raising it breaks login, and any hash already stored above it can never
+// verify, since verifyPassword reads the count back out of the hash.
+const PBKDF2_ITERATIONS = 100_000;
 
 export type AdminUser = {
   id: string;
